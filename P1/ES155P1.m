@@ -20,3 +20,5 @@ title("Steady State Velocity vs \beta")
 xlabel("\beta")
 ylabel(['$$v$$ steady state'], 'interpreter', 'latex')
 hold off
+
+saveas(1, "ES155P0_4a_steadystatevsbeta.png")
