@@ -3,7 +3,7 @@
 % Packages
 \usepackage{graphicx}   % for pictures
 \usepackage{amsthm}     % for math
-\usepackage{amsmath}    %   more math
+\usepackage{amsmath, mathtools}    %   more math
 \usepackage{amsfonts}   %   more math
 \usepackage{physics}    % more symbols
 \usepackage{circuitikz} % for circuit diagrams
@@ -87,7 +87,34 @@
     \end{itemize}
     
     \item % Problem 3
-    
+
+    The situation of the bouncer at a party can be modelled.  A simple model for an open loop system might be given by
+
+    \begin{align*}
+        \dot{n} &= \alpha \mathcal{K}(t) (n(t) - n_0) - \beta{n}
+    \end{align*}
+
+    Where $n$ is the population of the party at a given time.  As can be seen by this differential equation, the general idea is that if the party is larger than some certain threshold $n_0$, it will continue to grow because it is likely enjoyable.  Conversely, if the party is currently smaller than that threshold, it will continue to shrink, as the party is probably not that exciting and people there will leave.  The rate of growth might be affected by some parameters given by $\alpha$ which could include the quality of the music and some other factors.  The dynamics is also affected by the time of day of the party.  While the party might be apt to grow a lot around midnight, it is unlikely that many more people will join at 4 a.m.  This is reflected by the time kernel $\mathcal{K}(t)$.  In addition, there will always be some percenatge of people who are leaving, denoed by $\beta(n)$.
+
+    Adding the bouncer to the system will introduce a $u(t)$ coefficient to the first term:
+
+    \begin{align*}
+        \dot{n} &= \alpha \mathcal{K}(t) (n(t) - n_0)u(n) - \beta{n}
+    \end{align*}    
+
+    where
+
+    \[
+        u(n) = 
+        \begin{dcases}
+        0, & n > n_{max} \\
+        a, & n_0 < n < n_{max} \\
+        1, & n < n_0
+        \end{dcases}
+    \]
+
+    If there are more than some maximum number of people $n_{max}$ at the party, the bouncer will close the entrace, so the growth term in the differential equation will be zero.  If there are fewer than the optimal number of people, then the bouncer will let not prevent anyone from entering.  When the population is between these two, then the bouncer will let some people in, but will limit the growth in population to prevent reaching the maximum.
+
     \item % Problem 4
     
     For the cruise-control system with dynamics
@@ -178,7 +205,53 @@
          For a PI controller, the integral controller is used to eliminate steady state error, which improves on the proportional gain case above.  In the proportional-only controller, there is always a finite error as long as the system does not have infinite gain.  However, by adding a negative component of the integration of the error, long-term offsets can be eliminated.
 
         \item % Part c
+        See attached MATLAB code for modelling reference.  The following plots show the output and error of the cruise control system side by side when the input is a sine wave at four different frequencies.  The upper plots have lower frequency input and the lower plots have higher frequency input.  Figure \ref{fig.output_i} shows the system as a proportional controller only, with $k_i = 0$.  Figure \ref{fig.output_ii} shows the system as a PI controller with equal proportional and integral gains.  Figure \ref{fig.output_iii} shows the system with a much higher integral gain.
+
+        \begin{figure}
+            \centering
+            \includegraphics{ES155P1_4ci_output.png}
+            \caption{}
+            \label{fig.output_i}
+        \end{figure}
         
+        \begin{figure}
+            \centering
+            \includegraphics{ES155P1_4cii_output.png}
+            \caption{}
+            \label{fig.output_ii}
+        \end{figure}
+
+        \begin{figure}
+            \centering
+            \includegraphics{ES155P1_4ciii_output.png}
+            \caption{}
+            \label{fig.output_iii}
+        \end{figure}
+
+        In the left plots, the orange sine wave is the input, and the blue line is the output.  The integral control reduces the long term error.  As $k_i$ increases, the error reduces at low frequencies.  However, as can be seen in all of the graphs, for the highest frequency $\omega_0 = 10$, the output is unstable.  The error never converges to near zero.  This can be seen on the left output plots as well, where the blue and orange lines match much better at lower frequencies.
+
+        Plotting the peak-to-peak error for the last input period shows a similar trend in most cases.  As above, figure \ref{fig.error_i} shows the system as a proportional controller only, with $k_i = 0$.  Figure \ref{fig.error_ii} shows the system as a PI controller with equal proportional and integral gains.  Figure \ref{fig.error_iii} shows the system with a much higher integral gain.
+
+        \begin{figure}
+            \centering
+            \includegraphics{ES155P1_4ci_error.png}
+            \caption{}
+            \label{fig.error_i}
+        \end{figure}
+        
+        \begin{figure}
+            \centering
+            \includegraphics{ES155P1_4cii_error.png}
+            \caption{}
+            \label{fig.error_ii}
+        \end{figure}
+
+        \begin{figure}
+            \centering
+            \includegraphics{ES155P1_4ciii_error.png}
+            \caption{}
+            \label{fig.error_iii}
+        \end{figure}
         
     \end{enumerate}
 

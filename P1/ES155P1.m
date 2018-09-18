@@ -1,3 +1,9 @@
+%% Problem 3: Thermostat
+
+function dydt = temp(t,y)
+    
+end
+
 %% Problem 4: Cruise Control
 
 %% Part A: Equilibrium for open and closed loop controllers
@@ -12,13 +18,7 @@ V_fb = 10./(beta + 10)
 figure(1)
 clf
 hold on
-plot(beta, V_ff)
-plot(beta, V_fb)
-
-legend(["V_ff", "V_fb"])
-title("Steady State Velocity vs \beta")
-xlabel("\beta")
-ylabel(['$$v$$ steady state'], 'interpreter', 'latex')
+plot(beta, V_ff)r', 'latex')
 hold off
 
 saveas(1, "ES155P0_4a_steadystatevsbeta.png")
@@ -29,22 +29,22 @@ omega_0 = [0.01 0.1 1 10];
 
 % Part i
 err = compute_PI_err([1 0], 2, omega_0);
-saveas(gcf, "ES155P0_4ci_output.png")
+saveas(gcf, "ES155P1_4ci_output.png")
 ploterr([1 0], omega_0, err, 3);
-saveas(gcf, "ES155P0_4ci_error.png")
+saveas(gcf, "ES155P1_4ci_error.png")
 
 % Part ii
 err = compute_PI_err([1 1], 4, omega_0);
-saveas(gcf, "ES155P0_4cii_output.png")
+saveas(gcf, "ES155P1_4cii_output.png")
 ploterr([1 1], omega_0, err, 5);
-saveas(gcf, "ES155P0_4cii_error.png")
+saveas(gcf, "ES155P1_4cii_error.png")
 
 
 % Part iii
 err = compute_PI_err([1 10], 6, omega_0);
-saveas(gcf, "ES155P0_4ciii_output.png")
+saveas(gcf, "ES155P1_4ciii_output.png")
 ploterr([1 10], omega_0, err, 7);
-saveas(gcf, "ES155P0_4ciii_error.png")
+saveas(gcf, "ES155P1_4ciii_error.png")
 
 
 
