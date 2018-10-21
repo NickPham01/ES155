@@ -1,9 +1,3 @@
-%% Problem 3: Thermostat
-
-function dydt = temp(t,y)
-    
-end
-
 %% Problem 4: Cruise Control
 
 %% Part A: Equilibrium for open and closed loop controllers
