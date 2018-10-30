@@ -1,0 +1,228 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Problem 1</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-10-29"><meta name="DC.source" content="ES155P5.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Problem 1</h1><pre class="codeinput"><span class="comment">% Part c</span>
+
+<span class="comment">% parameters (arbitrary satisfy given assumptions ( &gt; 0)</span>
+<span class="comment">%syms omega_0 zeta_0 omega_e zeta_e</span>
+
+
+omega_0 = 0.1
+zeta_0 = 0.2
+omega_e = 0.3
+zeta_e = 0.4
+
+<span class="comment">% constants</span>
+k1 = 4*zeta_0*omega_0 - 8
+k2 = 2*omega_0^2 - 4*zeta_0*omega_0 + 6
+kr = 2*omega_0^2
+
+l1 = omega_e^2 - 6*zeta_e*omega_e + 23
+l2 = 2*zeta_e*omega_e - 4
+
+<span class="comment">% Matrices</span>
+A = [-3 2; 1 -1]
+B = [0.5; 0]
+C = [1 0]
+
+K = [k1 k2]
+L = [l1; l2]
+
+<span class="comment">% Compute the eigenvalues to</span>
+<span class="comment">%A_tilde = [(A - B*K), zeros(2); zeros(2), (A - L*C)]</span>
+A_tilde = [(A - B*K), B*K; zeros(2), (A - L*C)]
+eig(A_tilde)
+<span class="comment">%latex(eig(A_tilde))</span>
+</pre><pre class="codeoutput">
+omega_0 =
+
+    0.1000
+
+
+zeta_0 =
+
+    0.2000
+
+
+omega_e =
+
+    0.3000
+
+
+zeta_e =
+
+    0.4000
+
+
+k1 =
+
+   -7.9200
+
+
+k2 =
+
+    5.9400
+
+
+kr =
+
+    0.0200
+
+
+l1 =
+
+   22.3700
+
+
+l2 =
+
+   -3.7600
+
+
+A =
+
+    -3     2
+     1    -1
+
+
+B =
+
+    0.5000
+         0
+
+
+C =
+
+     1     0
+
+
+K =
+
+   -7.9200    5.9400
+
+
+L =
+
+   22.3700
+   -3.7600
+
+
+A_tilde =
+
+    0.9600   -0.9700   -3.9600    2.9700
+    1.0000   -1.0000         0         0
+         0         0  -25.3700    2.0000
+         0         0    4.7600   -1.0000
+
+
+ans =
+
+  -0.0200 + 0.0980i
+  -0.0200 - 0.0980i
+ -25.7546 + 0.0000i
+  -0.6154 + 0.0000i
+
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Problem 1
+
+% Part c
+
+% parameters (arbitrary satisfy given assumptions ( > 0)
+%syms omega_0 zeta_0 omega_e zeta_e
+
+
+omega_0 = 0.1
+zeta_0 = 0.2
+omega_e = 0.3
+zeta_e = 0.4
+
+% constants
+k1 = 4*zeta_0*omega_0 - 8
+k2 = 2*omega_0^2 - 4*zeta_0*omega_0 + 6
+kr = 2*omega_0^2
+
+l1 = omega_e^2 - 6*zeta_e*omega_e + 23
+l2 = 2*zeta_e*omega_e - 4
+
+% Matrices
+A = [-3 2; 1 -1]
+B = [0.5; 0]
+C = [1 0]
+
+K = [k1 k2]
+L = [l1; l2]
+
+% Compute the eigenvalues to 
+%A_tilde = [(A - B*K), zeros(2); zeros(2), (A - L*C)]
+A_tilde = [(A - B*K), B*K; zeros(2), (A - L*C)]
+eig(A_tilde)
+%latex(eig(A_tilde))
+
+##### SOURCE END #####
+--></body></html>

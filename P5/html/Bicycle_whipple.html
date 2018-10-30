@@ -1,0 +1,527 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Bicycle_whipple</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-10-29"><meta name="DC.source" content="Bicycle_whipple.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Given:</a></li><li><a href="#3">Compute K for different given eigenvalues</a></li><li><a href="#4">Homework 5.2</a></li><li><a href="#5">2.a</a></li><li><a href="#6">2.b</a></li><li><a href="#7">2.c</a></li></ul></div><pre class="codeinput"><span class="comment">% bicycle_whipple.m</span>
+<span class="comment">% KJA, 20 Aug 07</span>
+<span class="comment">%</span>
+<span class="comment">% This file contains the parameters that are used for the Whipple</span>
+<span class="comment">% bicycle model, introduced in Section 3.2 of AM08.  The model is</span>
+<span class="comment">% based on the linearized 4th order model and analysis of eigenvalues</span>
+<span class="comment">% from IEEE CSM (25:4) August 2005 pp 26-47</span>
+
+clear;
+</pre><h2 id="2">Given:</h2><pre class="language-matlab">Basic <span class="string">data</span> <span class="string">is</span> <span class="string">given</span> <span class="string">by</span> <span class="string">26</span> <span class="string">parameters</span>
+</pre><pre class="codeinput">g = 9.81;			<span class="comment">% Acceleration of gravity [m/s^2]</span>
+b = 1.00;			<span class="comment">% Wheel base [m]</span>
+c = 0.08;			<span class="comment">% Trail [m]</span>
+Rrw = 0.35; Rfw = 0.35;		<span class="comment">% Wheel radii</span>
+lambda = pi*70/180;		<span class="comment">% Head angle [radians]</span>
+
+<span class="comment">% Rear frame mass [kg], center of mass [m], and inertia tensor [kgm^2]</span>
+mrf=12;xrf=0.439;zrf=0.579;
+Jxxrf=0.475656;Jxzrf=0.273996;Jyyrf=1.033092;Jzzrf=0.527436;
+mrf=87;xrf=0.491586;zrf=1.028138;
+Jxxrf=3.283666;Jxzrf=0.602765;Jyyrf=3.8795952;Jzzrf=0.565929;
+
+<span class="comment">% Front frame mass [kg], center of mass [m], and inertia tensor [kgm^2]</span>
+mff=2;xff=0.866;zff=0.676;
+Jxxff=0.08;Jxzff=-0.02;Jyyff=0.07;Jzzff=0.02;
+
+<span class="comment">% Rear wheel mass [kg], center of mass [m], and inertia tensor [kgm^2]</span>
+mrw=1.5;Jxxrw=0.07;Jyyrw=0.14;
+
+<span class="comment">% Front wheel mass [kg], center of mass [m], and inertia tensor [kgm^2]</span>
+mfw=1.5;Jxxfw=0.07;Jyyfw=0.14;
+
+<span class="comment">% Auxiliary variables</span>
+xrw=0;zrw=Rrw;xfw=b;zfw=Rfw;
+Jzzrw=Jxxrw;Jzzfw=Jxxfw;
+mt=mrf+mrw+mff+mfw;
+xt=(mrf*xrf+mrw*xrw+mff*xff+mfw*xfw)/mt;
+zt=(mrf*zrf+mrw*zrw+mff*zff+mfw*zfw)/mt;
+Jxxt=Jxxrf+mrf*zrf^2+Jxxrw+mrw*zrw^2+Jxxff+mff*zff^2+Jxxfw+mfw*zfw^2;
+Jxzt=Jxzrf+mrf*xrf*zrf+mrw*xrw*zrw+Jxzff+mff*xff*zff+mfw*xfw*zfw;
+Jzzt=Jzzrf+mrf*xrf^2+Jzzrw+mrw*xrw^2+Jzzff+mff*xff^2+Jzzfw+mfw*xfw^2;
+mf=mff+mfw;
+xf=(mff*xff+mfw*xfw)/mf;zf=(mff*zff+mfw*zfw)/mf;
+Jxxf=Jxxff+mff*(zff-zf)^2+Jxxfw+mfw*(zfw-zf)^2;
+Jxzf=Jxzff+mff*(xff-xf)*(zff-zf)+mfw*(xfw-xf)*(zfw-zf);
+Jzzf=Jzzff+mff*(xff-xf)^2+Jzzfw+mfw*(xfw-xf)^2;
+d=(xf-b-c)*sin(lambda)+zf*cos(lambda);
+Fll=mf*d^2+Jxxf*cos(lambda)^2+2*Jxzf*sin(lambda)*cos(lambda)+Jzzf*sin(lambda)^2;
+Flx=mf*d*zf+Jxxf*cos(lambda)+Jxzf*sin(lambda);
+Flz=mf*d*xf+Jxzf*cos(lambda)+Jzzf*sin(lambda);
+gamma=c*sin(lambda)/b;
+Sr=Jyyrw/Rrw;Sf=Jyyfw/Rfw;St=Sr+Sf;Su=mf*d+gamma*mt*xt;
+
+<span class="comment">% Matrices for linearized fourth order model</span>
+M=[Jxxt -Flx-gamma*Jxzt;-Flx-gamma*Jxzt Fll+2*gamma*Flz+gamma^2*Jzzt];
+K0=[-mt*g*zt g*Su;g*Su  -g*Su*cos(lambda)];
+K2=[0 -(St+mt*zt)*sin(lambda)/b;0 (Su+Sf*cos(lambda))*sin(lambda)/b];
+c12=gamma*St+Sf*sin(lambda)+Jxzt*sin(lambda)/b+gamma*mt*zt;
+c22=Flz*sin(lambda)/b+gamma*(Su+Jzzt*sin(lambda)/b);
+C0=[0 -c12;(gamma*St+Sf*sin(lambda)) c22];
+one=diag([1 1]);null=zeros(2,2);
+
+<span class="comment">% Nominal velocity</span>
+v0=5;
+
+<span class="comment">% Matrices of state model</span>
+A=[null one;-M\(K0+K2*v0^2) -M\(C0*v0)];
+bm=M\[0;1];
+B=[0;0;bm];
+eig(A)';
+</pre><h2 id="3">Compute K for different given eigenvalues</h2><pre class="codeinput"><span class="comment">%{
+</span><span class="comment">eigs = [-2, -10, -1+i, -1-i;
+</span><span class="comment">        -2, -10, -2+2i, -2-2i;
+</span><span class="comment">        -2, -10, -5+5i, -5-5i];
+</span><span class="comment">
+</span><span class="comment">C = [0 1 0 0];
+</span><span class="comment">D = 0;
+</span><span class="comment">
+</span><span class="comment">figure(2); clf; hold on;
+</span><span class="comment">for i = 1:size(eigs,1)
+</span><span class="comment">    fprintf("For the eigenvalues:\n")
+</span><span class="comment">    eigs(i,:)
+</span><span class="comment">
+</span><span class="comment">   K = place(A, B, eigs(i,:))
+</span><span class="comment">   kr = inv(-(C - D*K)*inv(A - B*K)*B + D)
+</span><span class="comment">
+</span><span class="comment">   sys = ss(A-B*K, kr*B, C, D);
+</span><span class="comment">   opt = stepDataOptions('StepAmplitude',0.002);
+</span><span class="comment">   [y, t, x] = step(sys, 6, opt);
+</span><span class="comment">   figure(2)
+</span><span class="comment">   subplot(2,1,1)
+</span><span class="comment">   hold on;
+</span><span class="comment">   plot(t, y)
+</span><span class="comment">   ylim([-1, 2.5] * 10^-3)
+</span><span class="comment">
+</span><span class="comment">   subplot(2,1,2)
+</span><span class="comment">   hold on;
+</span><span class="comment">   T = -K*x' + kr*0.002;
+</span><span class="comment">   plot(t, T)
+</span><span class="comment">   ylim([-0.03, 0.005])
+</span><span class="comment">
+</span><span class="comment">end
+</span><span class="comment">hold off
+</span><span class="comment">
+</span><span class="comment">eigs_legend = ({"$\lambda = -2, -10, -1 \pm i$", "$\lambda = -2, -10, -2 \pm 2i$", "$\lambda = -2, -10, -5 \pm 5i$"});
+</span><span class="comment">titles = {"Output Steering Angle $\delta$, radians", "Input Torque T"};
+</span><span class="comment">for i = 1:2
+</span><span class="comment">    subplot(2,1,i);
+</span><span class="comment">    legend(eigs_legend, 'Interpreter', 'latex', 'Location', 'southeast')
+</span><span class="comment">    xlabel("Time $(s)$", 'Interpreter', 'latex')
+</span><span class="comment">    title(titles(i), 'Interpreter', 'latex')
+</span><span class="comment">end
+</span><span class="comment">
+</span><span class="comment">saveas(gca, "ES155P4_2_bicycleStepResponse.jpg")
+</span><span class="comment">
+</span><span class="comment">%}</span>
+</pre><h2 id="4">Homework 5.2</h2><h2 id="5">2.a</h2><pre class="codeinput">fprintf([<span class="string">'Part 2.a\n'</span>])
+A
+B
+C = [1 0 0 0]
+
+w_o = [C; C*A; C*A^2; C*A^3]
+rank(w_o)
+</pre><pre class="codeoutput">Part 2.a
+
+A =
+
+         0         0    1.0000         0
+         0         0         0    1.0000
+    8.7611   23.2100   -0.6370    2.1486
+  -14.9477   29.1529  -17.2465  -12.9089
+
+
+B =
+
+         0
+         0
+    0.2922
+    7.9109
+
+
+C =
+
+     1     0     0     0
+
+
+w_o =
+
+    1.0000         0         0         0
+         0         0    1.0000         0
+    8.7611   23.2100   -0.6370    2.1486
+  -37.6977   47.8537  -27.8894   -5.8950
+
+
+ans =
+
+     4
+
+</pre><h2 id="6">2.b</h2><pre class="codeinput">fprintf([<span class="string">'Part 2.b\n'</span>])
+
+L_eigs = [-4, -20, -2 + 2i, -2 - 2i];
+LT = place(A', C', L_eigs);
+L = LT'
+</pre><pre class="codeoutput">Part 2.b
+
+L =
+
+   14.4541
+  -75.9787
+  -19.1590
+  925.6916
+
+</pre><h2 id="7">2.c</h2><pre class="codeinput">fprintf([<span class="string">'Part 2.c\n'</span>])
+
+D = 0
+K_eigs = [-2, -10, -1+i, -1 - i]
+K = place(A, B, K_eigs)
+kr = inv(-(C - D*K)*inv(A - B*K)*B + D)
+
+A_t = [A-B*K, B*K; zeros(size(A)), A - L*C]
+B_t = [B*kr; zeros(size(B))]
+C_t = [C zeros(size(C))]
+
+<span class="comment">% simulate</span>
+sys = ss(A_t, B_t, C_t, 0);
+opt = stepDataOptions(<span class="string">'StepAmplitude'</span>,0.002);
+[y, t, x] = step(sys, 6, opt);
+
+<span class="comment">% plot the output tilt angle</span>
+figure(1); clf;
+subplot(2,1,1);
+plot(t, y);
+title(<span class="string">'Tilt Angle $y = \phi$'</span>, <span class="string">'Interpreter'</span>, <span class="string">'latex'</span>)
+xlabel(<span class="string">'$t$'</span>, <span class="string">'Interpreter'</span>, <span class="string">'latex'</span>)
+ylabel(<span class="string">'$y = \phi$'</span>, <span class="string">'Interpreter'</span>, <span class="string">'latex'</span>)
+
+<span class="comment">% compute x_hat by extracting the state x and error e</span>
+e = x(:, 5:8);
+x = x(:, 1:4);
+x_hat = x + e;
+<span class="comment">%</span>
+<span class="comment">% get the Torque input then plot</span>
+T = -K*x_hat' + kr*0.002;
+subplot(2,1,2);
+plot(t, x(:,2));
+title(<span class="string">'Torque $y = \phi$'</span>, <span class="string">'Interpreter'</span>, <span class="string">'latex'</span>)
+xlabel(<span class="string">'$t$'</span>, <span class="string">'Interpreter'</span>, <span class="string">'latex'</span>)
+ylabel(<span class="string">'$y = \phi$'</span>, <span class="string">'Interpreter'</span>, <span class="string">'latex'</span>)
+
+saveas(gca, <span class="string">"ES155P5_2_bicycle.jpg"</span>)
+</pre><pre class="codeoutput">Part 2.c
+
+D =
+
+     0
+
+
+K_eigs =
+
+  -2.0000 + 0.0000i -10.0000 + 0.0000i  -1.0000 + 1.0000i  -1.0000 - 1.0000i
+
+
+K =
+
+    0.3247    8.4043   -1.3455    0.1071
+
+
+kr =
+
+    0.2284
+
+
+A_t =
+
+  Columns 1 through 7
+
+         0         0    1.0000         0         0         0         0
+         0         0         0    1.0000         0         0         0
+    8.6662   20.7544   -0.2438    2.1173    0.0949    2.4557   -0.3932
+  -17.5161  -37.3330   -6.6021  -13.7562    2.5684   66.4859  -10.6444
+         0         0         0         0  -14.4541         0    1.0000
+         0         0         0         0   75.9787         0         0
+         0         0         0         0   27.9201   23.2100   -0.6370
+         0         0         0         0 -940.6393   29.1529  -17.2465
+
+  Column 8
+
+         0
+         0
+    0.0313
+    0.8472
+         0
+    1.0000
+    2.1486
+  -12.9089
+
+
+B_t =
+
+         0
+         0
+    0.0668
+    1.8072
+         0
+         0
+         0
+         0
+
+
+C_t =
+
+     1     0     0     0     0     0     0     0
+
+</pre><img vspace="5" hspace="5" src="Bicycle_whipple_01.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+% bicycle_whipple.m
+% KJA, 20 Aug 07
+%
+% This file contains the parameters that are used for the Whipple
+% bicycle model, introduced in Section 3.2 of AM08.  The model is
+% based on the linearized 4th order model and analysis of eigenvalues
+% from IEEE CSM (25:4) August 2005 pp 26-47
+
+clear;
+
+%% Given:
+%   Basic data is given by 26 parameters
+g = 9.81;			% Acceleration of gravity [m/s^2]
+b = 1.00;			% Wheel base [m]
+c = 0.08;			% Trail [m]
+Rrw = 0.35; Rfw = 0.35;		% Wheel radii
+lambda = pi*70/180;		% Head angle [radians]
+
+% Rear frame mass [kg], center of mass [m], and inertia tensor [kgm^2]
+mrf=12;xrf=0.439;zrf=0.579;
+Jxxrf=0.475656;Jxzrf=0.273996;Jyyrf=1.033092;Jzzrf=0.527436;
+mrf=87;xrf=0.491586;zrf=1.028138;
+Jxxrf=3.283666;Jxzrf=0.602765;Jyyrf=3.8795952;Jzzrf=0.565929;
+
+% Front frame mass [kg], center of mass [m], and inertia tensor [kgm^2]
+mff=2;xff=0.866;zff=0.676;
+Jxxff=0.08;Jxzff=-0.02;Jyyff=0.07;Jzzff=0.02;
+
+% Rear wheel mass [kg], center of mass [m], and inertia tensor [kgm^2]
+mrw=1.5;Jxxrw=0.07;Jyyrw=0.14;
+
+% Front wheel mass [kg], center of mass [m], and inertia tensor [kgm^2]
+mfw=1.5;Jxxfw=0.07;Jyyfw=0.14;
+
+% Auxiliary variables
+xrw=0;zrw=Rrw;xfw=b;zfw=Rfw;
+Jzzrw=Jxxrw;Jzzfw=Jxxfw;
+mt=mrf+mrw+mff+mfw;
+xt=(mrf*xrf+mrw*xrw+mff*xff+mfw*xfw)/mt;
+zt=(mrf*zrf+mrw*zrw+mff*zff+mfw*zfw)/mt;
+Jxxt=Jxxrf+mrf*zrf^2+Jxxrw+mrw*zrw^2+Jxxff+mff*zff^2+Jxxfw+mfw*zfw^2;
+Jxzt=Jxzrf+mrf*xrf*zrf+mrw*xrw*zrw+Jxzff+mff*xff*zff+mfw*xfw*zfw;
+Jzzt=Jzzrf+mrf*xrf^2+Jzzrw+mrw*xrw^2+Jzzff+mff*xff^2+Jzzfw+mfw*xfw^2;
+mf=mff+mfw;
+xf=(mff*xff+mfw*xfw)/mf;zf=(mff*zff+mfw*zfw)/mf;
+Jxxf=Jxxff+mff*(zff-zf)^2+Jxxfw+mfw*(zfw-zf)^2;
+Jxzf=Jxzff+mff*(xff-xf)*(zff-zf)+mfw*(xfw-xf)*(zfw-zf);
+Jzzf=Jzzff+mff*(xff-xf)^2+Jzzfw+mfw*(xfw-xf)^2;
+d=(xf-b-c)*sin(lambda)+zf*cos(lambda);
+Fll=mf*d^2+Jxxf*cos(lambda)^2+2*Jxzf*sin(lambda)*cos(lambda)+Jzzf*sin(lambda)^2;
+Flx=mf*d*zf+Jxxf*cos(lambda)+Jxzf*sin(lambda);
+Flz=mf*d*xf+Jxzf*cos(lambda)+Jzzf*sin(lambda);
+gamma=c*sin(lambda)/b;
+Sr=Jyyrw/Rrw;Sf=Jyyfw/Rfw;St=Sr+Sf;Su=mf*d+gamma*mt*xt;
+
+% Matrices for linearized fourth order model
+M=[Jxxt -Flx-gamma*Jxzt;-Flx-gamma*Jxzt Fll+2*gamma*Flz+gamma^2*Jzzt];
+K0=[-mt*g*zt g*Su;g*Su  -g*Su*cos(lambda)];
+K2=[0 -(St+mt*zt)*sin(lambda)/b;0 (Su+Sf*cos(lambda))*sin(lambda)/b];
+c12=gamma*St+Sf*sin(lambda)+Jxzt*sin(lambda)/b+gamma*mt*zt;
+c22=Flz*sin(lambda)/b+gamma*(Su+Jzzt*sin(lambda)/b);
+C0=[0 -c12;(gamma*St+Sf*sin(lambda)) c22]; 
+one=diag([1 1]);null=zeros(2,2);
+
+% Nominal velocity 
+v0=5;
+
+% Matrices of state model
+A=[null one;-M\(K0+K2*v0^2) -M\(C0*v0)];
+bm=M\[0;1];
+B=[0;0;bm];    
+eig(A)';
+
+
+%% Compute K for different given eigenvalues
+
+%{
+eigs = [-2, -10, -1+i, -1-i;
+        -2, -10, -2+2i, -2-2i;
+        -2, -10, -5+5i, -5-5i];
+    
+C = [0 1 0 0];
+D = 0;
+
+figure(2); clf; hold on;
+for i = 1:size(eigs,1)
+    fprintf("For the eigenvalues:\n")
+    eigs(i,:)
+    
+   K = place(A, B, eigs(i,:))
+   kr = inv(-(C - D*K)*inv(A - B*K)*B + D)
+   
+   sys = ss(A-B*K, kr*B, C, D);
+   opt = stepDataOptions('StepAmplitude',0.002);
+   [y, t, x] = step(sys, 6, opt);
+   figure(2)
+   subplot(2,1,1)
+   hold on;
+   plot(t, y)
+   ylim([-1, 2.5] * 10^-3)
+   
+   subplot(2,1,2)
+   hold on;
+   T = -K*x' + kr*0.002;
+   plot(t, T)
+   ylim([-0.03, 0.005])
+   
+end
+hold off
+
+eigs_legend = ({"$\lambda = -2, -10, -1 \pm i$", "$\lambda = -2, -10, -2 \pm 2i$", "$\lambda = -2, -10, -5 \pm 5i$"});
+titles = {"Output Steering Angle $\delta$, radians", "Input Torque T"};
+for i = 1:2
+    subplot(2,1,i);
+    legend(eigs_legend, 'Interpreter', 'latex', 'Location', 'southeast')
+    xlabel("Time $(s)$", 'Interpreter', 'latex')
+    title(titles(i), 'Interpreter', 'latex')
+end
+
+saveas(gca, "ES155P4_2_bicycleStepResponse.jpg")
+
+%}
+
+%% Homework 5.2
+%% 2.a
+fprintf(['Part 2.a\n'])
+A
+B
+C = [1 0 0 0]
+
+w_o = [C; C*A; C*A^2; C*A^3]
+rank(w_o)
+
+%% 2.b
+fprintf(['Part 2.b\n'])
+
+L_eigs = [-4, -20, -2 + 2i, -2 - 2i];
+LT = place(A', C', L_eigs);
+L = LT'
+
+%% 2.c
+fprintf(['Part 2.c\n'])
+
+D = 0
+K_eigs = [-2, -10, -1+i, -1 - i]
+K = place(A, B, K_eigs)
+kr = inv(-(C - D*K)*inv(A - B*K)*B + D)
+
+A_t = [A-B*K, B*K; zeros(size(A)), A - L*C]
+B_t = [B*kr; zeros(size(B))]
+C_t = [C zeros(size(C))]
+
+% simulate
+sys = ss(A_t, B_t, C_t, 0);
+opt = stepDataOptions('StepAmplitude',0.002);
+[y, t, x] = step(sys, 6, opt);
+
+% plot the output tilt angle
+figure(1); clf;
+subplot(2,1,1);
+plot(t, y);
+title('Tilt Angle $y = \phi$', 'Interpreter', 'latex')
+xlabel('$t$', 'Interpreter', 'latex')
+ylabel('$y = \phi$', 'Interpreter', 'latex')
+
+% compute x_hat by extracting the state x and error e
+e = x(:, 5:8);
+x = x(:, 1:4);
+x_hat = x + e;
+% 
+% get the Torque input then plot
+T = -K*x_hat' + kr*0.002;
+subplot(2,1,2);
+plot(t, x(:,2));
+title('Torque $y = \phi$', 'Interpreter', 'latex')
+xlabel('$t$', 'Interpreter', 'latex')
+ylabel('$y = \phi$', 'Interpreter', 'latex')
+
+saveas(gca, "ES155P5_2_bicycle.jpg")
+
+
+
+##### SOURCE END #####
+--></body></html>

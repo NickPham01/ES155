@@ -6,6 +6,8 @@
 % based on the linearized 4th order model and analysis of eigenvalues
 % from IEEE CSM (25:4) August 2005 pp 26-47
 
+clear;
+
 %% Given:
 %   Basic data is given by 26 parameters
 g = 9.81;			% Acceleration of gravity [m/s^2]
@@ -67,53 +69,113 @@ v0=5;
 A=[null one;-M\(K0+K2*v0^2) -M\(C0*v0)];
 bm=M\[0;1];
 B=[0;0;bm];    
-eig(A)'
+eig(A)';
+
 
 %% Compute K for different given eigenvalues
+
+%{
 eigs = [-2, -10, -1+i, -1-i;
         -2, -10, -2+2i, -2-2i;
         -2, -10, -5+5i, -5-5i];
     
 C = [0 1 0 0];
-D = 0
+D = 0;
 
-figure(2); clf;
-hold on
+figure(2); clf; hold on;
 for i = 1:size(eigs,1)
+    fprintf("For the eigenvalues:\n")
+    eigs(i,:)
+    
    K = place(A, B, eigs(i,:))
    kr = inv(-(C - D*K)*inv(A - B*K)*B + D)
    
    sys = ss(A-B*K, kr*B, C, D);
    opt = stepDataOptions('StepAmplitude',0.002);
-   step(sys)
+   [y, t, x] = step(sys, 6, opt);
+   figure(2)
+   subplot(2,1,1)
+   hold on;
+   plot(t, y)
+   ylim([-1, 2.5] * 10^-3)
+   
+   subplot(2,1,2)
+   hold on;
+   T = -K*x' + kr*0.002;
+   plot(t, T)
+   ylim([-0.03, 0.005])
+   
 end
 hold off
 
-eigs_legend = (
+eigs_legend = ({"$\lambda = -2, -10, -1 \pm i$", "$\lambda = -2, -10, -2 \pm 2i$", "$\lambda = -2, -10, -5 \pm 5i$"});
+titles = {"Output Steering Angle $\delta$, radians", "Input Torque T"};
+for i = 1:2
+    subplot(2,1,i);
+    legend(eigs_legend, 'Interpreter', 'latex', 'Location', 'southeast')
+    xlabel("Time $(s)$", 'Interpreter', 'latex')
+    title(titles(i), 'Interpreter', 'latex')
+end
 
+saveas(gca, "ES155P4_2_bicycleStepResponse.jpg")
 
+%}
 
+%% Homework 5.2
+%% 2.a
+fprintf(['Part 2.a\n'])
+A
+B
+C = [1 0 0 0]
 
+w_o = [C; C*A; C*A^2; C*A^3]
+rank(w_o)
 
+%% 2.b
+fprintf(['Part 2.b\n'])
 
+L_eigs = [-4, -20, -2 + 2i, -2 - 2i];
+LT = place(A', C', L_eigs);
+L = LT'
 
+%% 2.c
+fprintf(['Part 2.c\n'])
 
+D = 0
+K_eigs = [-2, -10, -1+i, -1 - i]
+K = place(A, B, K_eigs)
+kr = inv(-(C - D*K)*inv(A - B*K)*B + D)
 
+A_t = [A-B*K, B*K; zeros(size(A)), A - L*C]
+B_t = [B*kr; zeros(size(B))]
+C_t = [C zeros(size(C))]
 
+% simulate
+sys = ss(A_t, B_t, C_t, 0);
+opt = stepDataOptions('StepAmplitude',0.002);
+[y, t, x] = step(sys, 6, opt);
 
+% plot the output tilt angle
+figure(1); clf;
+subplot(2,1,1);
+plot(t, y);
+title('Tilt Angle $y = \phi$', 'Interpreter', 'latex')
+xlabel('$t$', 'Interpreter', 'latex')
+ylabel('$y = \phi$', 'Interpreter', 'latex')
 
+% compute x_hat by extracting the state x and error e
+e = x(:, 5:8);
+x = x(:, 1:4);
+x_hat = x + e;
+% 
+% get the Torque input then plot
+T = -K*x_hat' + kr*0.002;
+subplot(2,1,2);
+plot(t, x(:,2));
+title('Torque $y = \phi$', 'Interpreter', 'latex')
+xlabel('$t$', 'Interpreter', 'latex')
+ylabel('$y = \phi$', 'Interpreter', 'latex')
 
-
-
-
-
-
-
-
-
-
-
-
-
+saveas(gca, "ES155P5_2_bicycle.jpg")
 
 
