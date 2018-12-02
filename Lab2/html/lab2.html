@@ -1,0 +1,460 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Part 1</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-11-15"><meta name="DC.source" content="lab2.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Part 1</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">1.a</a></li><li><a href="#2">1.b</a></li><li><a href="#3">1.c</a></li></ul></div><h2 id="1">1.a</h2><pre class="codeinput"><span class="comment">% Given Constants</span>
+g   = 9.81;         <span class="comment">% gaccel[m/s^2]</span>
+mp  = 0.230;        <span class="comment">% massofpendulum[kg]</span>
+l   = 0.6413;       <span class="comment">% lengthofpendulum[m]</span>
+r   = l/2;          <span class="comment">% radiustoCOMofpendulum[m]</span>
+J   = (1/3)*mp*l^2; <span class="comment">% inertiaofpendulumrotatingabout1end[kg-m^2]</span>
+y   = 0.0024;       <span class="comment">% pendulumdamping[N-m*s]</span>
+mc  = 0.38;         <span class="comment">% massofcart[kg]</span>
+c   = 0.90;         <span class="comment">% cartdamping[N-s/m]</span>
+
+<span class="comment">% Derived Constants</span>
+Mhat = mp + mc;
+Jhat = J + mp*r^2;
+mu = mp^2 * r^2 - Jhat^2 * Mhat^2;
+
+A = [0 0 1 0;
+     0 0 0 1;
+     0, g/mu, (Jhat*c)/mu, -(y*mp*r)/mu;
+     0, -(Mhat*mp*r*g)/mu, -(mp*r*c)/mu, (Mhat*y)/mu]
+
+B = [0; 0; -Jhat/mu; -(mp*r)/mu]
+
+C = [1 0 0 0; 0 1 0 0]
+
+D = [0; 0]
+</pre><pre class="codeoutput">
+A =
+
+   1.0e+03 *
+
+         0         0    0.0010         0
+         0         0         0    0.0010
+         0    2.2782    0.0115   -0.0000
+         0   -0.1025   -0.0154    0.0003
+
+
+B =
+
+         0
+         0
+  -12.8140
+  -17.1268
+
+
+C =
+
+     1     0     0     0
+     0     1     0     0
+
+
+D =
+
+     0
+     0
+
+</pre><h2 id="2">1.b</h2><pre class="codeinput">sys = ss(A, B, C, D)
+eig(A)
+
+opt = stepDataOptions(<span class="string">'StepAmplitude'</span>, 0.1)
+[y, t, x] = step(sys, opt);
+
+figure(1); clf;
+plot(t, y)
+hline = refline(0, 0.1)
+hline.Color = <span class="string">'m'</span>
+
+legend(<span class="string">"Position"</span>, <span class="string">"Slope"</span>, <span class="string">"Input"</span>, <span class="string">'Location'</span>, <span class="string">'Northwest'</span>)
+saveas(gca, <span class="string">'ES155Lab2_1b_step.jpg'</span>)
+</pre><pre class="codeoutput">
+sys =
+ 
+  A = 
+            x1       x2       x3       x4
+   x1        0        0        1        0
+   x2        0        0        0        1
+   x3        0     2278    11.53  -0.0411
+   x4        0   -102.5   -15.41     0.34
+ 
+  B = 
+           u1
+   x1       0
+   x2       0
+   x3  -12.81
+   x4  -17.13
+ 
+  C = 
+       x1  x2  x3  x4
+   y1   1   0   0   0
+   y2   0   1   0   0
+ 
+  D = 
+       u1
+   y1   0
+   y2   0
+ 
+Continuous-time state-space model.
+
+
+ans =
+
+   0.0000 + 0.0000i
+  19.8901 +28.6414i
+  19.8901 -28.6414i
+ -27.9076 + 0.0000i
+
+
+opt = 
+
+  step with properties:
+
+      InputOffset: 0
+    StepAmplitude: 0.1000
+
+
+hline = 
+
+  Line with properties:
+
+              Color: [0 0.4470 0.7410]
+          LineStyle: '-'
+          LineWidth: 0.5000
+             Marker: 'none'
+         MarkerSize: 6
+    MarkerFaceColor: 'none'
+              XData: [0 1.5000]
+              YData: [0.1000 0.1000]
+              ZData: [1&times;0 double]
+
+  Use GET to show all properties
+
+
+hline = 
+
+  Line with properties:
+
+              Color: [1 0 1]
+          LineStyle: '-'
+          LineWidth: 0.5000
+             Marker: 'none'
+         MarkerSize: 6
+    MarkerFaceColor: 'none'
+              XData: [0 1.5000]
+              YData: [0.1000 0.1000]
+              ZData: [1&times;0 double]
+
+  Use GET to show all properties
+
+</pre><img vspace="5" hspace="5" src="lab2_01.png" alt=""> <h2 id="3">1.c</h2><pre class="codeinput"><span class="comment">% the smaller poles allow the pendulum to be pushed around before reaching</span>
+<span class="comment">% an equilibrium, while the large value poles keep the pendulum at the</span>
+<span class="comment">% equilibrium point theta = 0</span>
+
+figure(2); clf;
+
+plotCount = 1;
+pMultipliers = [1, 2, 5, 10]
+<span class="keyword">for</span> i = 1:length(pMultipliers)
+    p = [-1, -2, -3, -4];
+    p = p.*pMultipliers(i)
+    K = place(A, B, p)
+
+    sys = ss(A- B*K, B, C, 0);
+    opt = stepDataOptions(<span class="string">'StepAmplitude'</span>, 0.1);
+    [y, t, x] = step(sys, opt);
+
+    titles = [<span class="string">"Position"</span>; <span class="string">"Angle"</span>];
+    ylabels = [<span class="string">"$x$"</span>, <span class="string">"$\theta$"</span>]
+    <span class="keyword">for</span> j = 1:2
+        subplotIdx = plotCount + j -1
+        subplot(length(pMultipliers),2, subplotIdx)
+        plot(t, y(:,j))
+        hline = refline(0, 0.1);
+        hline.Color = <span class="string">'m'</span>;
+        title({char(titles(j)), [<span class="string">'\lambda = '</span>, num2str(p(1)), <span class="string">', '</span>, num2str(p(2)), <span class="string">', '</span>, num2str(p(3)), <span class="string">', '</span>, num2str(p(4))]})
+        ylabel(char(ylabels(j)), <span class="string">'Interpreter'</span>, <span class="string">'latex'</span>)
+    <span class="keyword">end</span>
+
+    plotCount = plotCount + 2;
+<span class="keyword">end</span>
+
+
+subplot(length(pMultipliers), 2, plotCount - 2)
+xlabel(<span class="string">'$t$'</span>, <span class="string">'Interpreter'</span>, <span class="string">'latex'</span>)
+
+subplot(length(pMultipliers), 2, plotCount - 1)
+xlabel(<span class="string">'$t$'</span>, <span class="string">'Interpreter'</span>, <span class="string">'latex'</span>)
+</pre><pre class="codeoutput">
+pMultipliers =
+
+     1     2     5    10
+
+
+p =
+
+    -1    -2    -3    -4
+
+
+K =
+
+   -0.0006  -33.9358    0.5078   -1.6570
+
+
+ylabels = 
+
+  1&times;2 string array
+
+    "$x$"    "$\theta$"
+
+
+subplotIdx =
+
+     1
+
+
+subplotIdx =
+
+     2
+
+
+p =
+
+    -2    -4    -6    -8
+
+
+K =
+
+   -0.0095  -50.6099    0.3358   -2.1122
+
+
+ylabels = 
+
+  1&times;2 string array
+
+    "$x$"    "$\theta$"
+
+
+subplotIdx =
+
+     3
+
+
+subplotIdx =
+
+     4
+
+
+p =
+
+    -5   -10   -15   -20
+
+
+K =
+
+   -0.3719 -119.7142   -0.4862   -3.2488
+
+
+ylabels = 
+
+  1&times;2 string array
+
+    "$x$"    "$\theta$"
+
+
+subplotIdx =
+
+     5
+
+
+subplotIdx =
+
+     6
+
+
+p =
+
+   -10   -20   -30   -40
+
+
+K =
+
+   -5.9507 -289.5229   -3.2349   -4.1117
+
+
+ylabels = 
+
+  1&times;2 string array
+
+    "$x$"    "$\theta$"
+
+
+subplotIdx =
+
+     7
+
+
+subplotIdx =
+
+     8
+
+</pre><img vspace="5" hspace="5" src="lab2_02.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Part 1
+%% 1.a
+
+% Given Constants
+g   = 9.81;         % gaccel[m/s^2]
+mp  = 0.230;        % massofpendulum[kg]
+l   = 0.6413;       % lengthofpendulum[m]
+r   = l/2;          % radiustoCOMofpendulum[m]
+J   = (1/3)*mp*l^2; % inertiaofpendulumrotatingabout1end[kg-m^2]
+y   = 0.0024;       % pendulumdamping[N-m*s]
+mc  = 0.38;         % massofcart[kg]
+c   = 0.90;         % cartdamping[N-s/m]
+
+% Derived Constants
+Mhat = mp + mc;
+Jhat = J + mp*r^2;
+mu = mp^2 * r^2 - Jhat^2 * Mhat^2;
+
+A = [0 0 1 0;
+     0 0 0 1;
+     0, g/mu, (Jhat*c)/mu, -(y*mp*r)/mu;
+     0, -(Mhat*mp*r*g)/mu, -(mp*r*c)/mu, (Mhat*y)/mu]
+ 
+B = [0; 0; -Jhat/mu; -(mp*r)/mu]
+
+C = [1 0 0 0; 0 1 0 0]
+
+D = [0; 0]
+
+%% 1.b
+
+sys = ss(A, B, C, D)
+eig(A)
+
+opt = stepDataOptions('StepAmplitude', 0.1)
+[y, t, x] = step(sys, opt);
+
+figure(1); clf;
+plot(t, y)
+hline = refline(0, 0.1)
+hline.Color = 'm'
+
+legend("Position", "Slope", "Input", 'Location', 'Northwest')
+saveas(gca, 'ES155Lab2_1b_step.jpg')
+
+%% 1.c
+
+
+% the smaller poles allow the pendulum to be pushed around before reaching
+% an equilibrium, while the large value poles keep the pendulum at the
+% equilibrium point theta = 0
+
+figure(2); clf;
+
+plotCount = 1;
+pMultipliers = [1, 2, 5, 10]
+for i = 1:length(pMultipliers)
+    p = [-1, -2, -3, -4];
+    p = p.*pMultipliers(i)
+    K = place(A, B, p)
+
+    sys = ss(A- B*K, B, C, 0);
+    opt = stepDataOptions('StepAmplitude', 0.1);
+    [y, t, x] = step(sys, opt);
+
+    titles = ["Position"; "Angle"];
+    ylabels = ["$x$", "$\theta$"]
+    for j = 1:2
+        subplotIdx = plotCount + j -1
+        subplot(length(pMultipliers),2, subplotIdx)
+        plot(t, y(:,j))
+        hline = refline(0, 0.1);
+        hline.Color = 'm';
+        title({char(titles(j)), ['\lambda = ', num2str(p(1)), ', ', num2str(p(2)), ', ', num2str(p(3)), ', ', num2str(p(4))]})
+        ylabel(char(ylabels(j)), 'Interpreter', 'latex')
+    end
+    
+    plotCount = plotCount + 2;
+end
+
+
+subplot(length(pMultipliers), 2, plotCount - 2)
+xlabel('$t$', 'Interpreter', 'latex')
+
+subplot(length(pMultipliers), 2, plotCount - 1)
+xlabel('$t$', 'Interpreter', 'latex')
+
+
+
+
+##### SOURCE END #####
+--></body></html>

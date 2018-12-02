@@ -1,0 +1,857 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>ES155 P7</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-11-19"><meta name="DC.source" content="P7.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>ES155 P7</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Problem 3</a></li><li><a href="#2">3.a</a></li><li><a href="#3">3.b</a></li><li><a href="#4">Problem 4</a></li><li><a href="#5">4.a</a></li></ul></div><h2 id="1">Problem 3</h2><h2 id="2">3.a</h2><pre class="codeinput">P = tf(1, [1 10 3 10])
+S = 1000 * tf([1 1], [1 10])
+
+L = P*S
+
+figure(1); clf;
+subplot(1,2,1)
+bode(L)
+subplot(1,2,2)
+nyquist(L)
+
+saveas(gcf, <span class="string">"ES155P7_3a.jpg"</span>)
+
+pole(L)
+[GainMargin, PhaseMargin, Wcg, Wcp] = margin(L)
+</pre><pre class="codeoutput">
+P =
+ 
+             1
+  -----------------------
+  s^3 + 10 s^2 + 3 s + 10
+ 
+Continuous-time transfer function.
+
+
+S =
+ 
+  1000 s + 1000
+  -------------
+     s + 10
+ 
+Continuous-time transfer function.
+
+
+L =
+ 
+             1000 s + 1000
+  -----------------------------------
+  s^4 + 20 s^3 + 103 s^2 + 40 s + 100
+ 
+Continuous-time transfer function.
+
+
+ans =
+
+ -10.0000 + 0.0000i
+  -9.7980 + 0.0000i
+  -0.1010 + 1.0052i
+  -0.1010 - 1.0052i
+
+
+GainMargin =
+
+    1.6047
+
+
+PhaseMargin =
+
+   12.9616
+
+
+Wcg =
+
+    9.0682
+
+
+Wcp =
+
+    7.0090
+
+</pre><img vspace="5" hspace="5" src="P7_01.png" alt=""> <h2 id="3">3.b</h2><pre class="codeinput">P = tf(100, [100, 101, 1])
+S = tf([1 10], 1)
+
+L = P*S
+
+figure(2); clf;
+subplot(1,2,1)
+bode(L)
+subplot(1,2,2)
+nyquist(L)
+
+saveas(gcf, <span class="string">"ES155P7_3b.jpg"</span>)
+
+pole(L)
+[GainMargin, PhaseMargin, Wcg, Wcp] = margin(L)
+</pre><pre class="codeoutput">
+P =
+ 
+          100
+  -------------------
+  100 s^2 + 101 s + 1
+ 
+Continuous-time transfer function.
+
+
+S =
+ 
+  s + 10
+ 
+Continuous-time transfer function.
+
+
+L =
+ 
+     100 s + 1000
+  -------------------
+  100 s^2 + 101 s + 1
+ 
+Continuous-time transfer function.
+
+
+ans =
+
+   -1.0000
+   -0.0100
+
+
+GainMargin =
+
+   Inf
+
+
+PhaseMargin =
+
+   35.2780
+
+
+Wcg =
+
+   NaN
+
+
+Wcp =
+
+    3.1623
+
+</pre><img vspace="5" hspace="5" src="P7_02.png" alt=""> <h2 id="4">Problem 4</h2><pre class="codeinput"><span class="comment">% Constants</span>
+a = 0.2
+b = 25
+c = 50
+T = 200
+m = 1000
+
+P = tf(T*b*a, [m, a*m + c, a*c])
+</pre><pre class="codeoutput">
+a =
+
+    0.2000
+
+
+b =
+
+    25
+
+
+c =
+
+    50
+
+
+T =
+
+   200
+
+
+m =
+
+        1000
+
+
+P =
+ 
+          1000
+  ---------------------
+  1000 s^2 + 250 s + 10
+ 
+Continuous-time transfer function.
+
+</pre><h2 id="5">4.a</h2><pre class="codeinput">table = zeros(4,8);
+
+figure(3); clf;
+figure(4); clf;
+
+Kp = [0.5, 0.05, 0.05, 0.005]
+Ki = [0.1, 1, 0.001, 0.001]
+
+<span class="keyword">for</span> i = 1:4
+   figure(3)
+   kp = Kp(i)
+   ki = Ki(i)
+
+   table(i,1) = kp;
+   table(i,2) = ki;
+
+   C = tf([kp, ki], 1)
+   G = feedback(P*C, 1)
+
+   L = P*C
+   sysL = ss(L)
+
+   sys = ss(G);
+
+   table(i,3) = isstable(sys);
+
+   [GainMargin, PhaseMargin, Wcg, Wcp] = margin(sysL)
+
+   table(i,4) = GainMargin;
+   table(i,5) = PhaseMargin;
+
+   [y, t] = step(sys);
+   <span class="keyword">if</span> y(length(t)) == y(length(t-2))
+       error_SS = 1 - y(length(t))
+   <span class="keyword">else</span>
+       error(<span class="string">"Steady State not reached"</span>)
+   <span class="keyword">end</span>
+
+   table(i,6) = error_SS;
+
+   S = stepinfo(sys)
+
+   table(i,7) = S.RiseTime;
+   table(i,8) = S.Overshoot;
+
+   subplot(2,4,i)
+   pzmap(sys)
+
+   subplot(2,4,i+4)
+   step(sys, S.RiseTime*10)
+
+   figure(4)
+   subplot(2,4,i)
+   bode(sys)
+   subplot(2,4,i+4)
+   nyquist(sys)
+
+   <span class="comment">% plot the unit circle on the nyquist plot</span>
+   theta = 0:0.1:2*pi;
+   x = cos(theta);
+   y = sin(theta);
+   hold <span class="string">on</span>;
+   plot(x,y,<span class="string">'--'</span>);
+   hold <span class="string">off</span>;
+<span class="keyword">end</span>
+
+table
+</pre><pre class="codeoutput">
+Kp =
+
+    0.5000    0.0500    0.0500    0.0050
+
+
+Ki =
+
+    0.1000    1.0000    0.0010    0.0010
+
+
+kp =
+
+    0.5000
+
+
+ki =
+
+    0.1000
+
+
+C =
+ 
+  0.5 s + 0.1
+ 
+Continuous-time transfer function.
+
+
+G =
+ 
+       500 s + 100
+  ----------------------
+  1000 s^2 + 750 s + 110
+ 
+Continuous-time transfer function.
+
+
+L =
+ 
+       500 s + 100
+  ---------------------
+  1000 s^2 + 250 s + 10
+ 
+Continuous-time transfer function.
+
+
+sysL =
+ 
+  A = 
+          x1     x2
+   x1  -0.25  -0.08
+   x2  0.125      0
+ 
+  B = 
+       u1
+   x1   1
+   x2   0
+ 
+  C = 
+        x1   x2
+   y1  0.5  0.8
+ 
+  D = 
+       u1
+   y1   0
+ 
+Continuous-time state-space model.
+
+
+GainMargin =
+
+   Inf
+
+
+PhaseMargin =
+
+   95.7406
+
+
+Wcg =
+
+   NaN
+
+
+Wcp =
+
+    0.4974
+
+
+error_SS =
+
+    0.0910
+
+
+S = 
+
+  struct with fields:
+
+        RiseTime: 3.9946
+    SettlingTime: 7.1129
+     SettlingMin: 0.8223
+     SettlingMax: 0.9091
+       Overshoot: 0
+      Undershoot: 0
+            Peak: 0.9091
+        PeakTime: 19.1743
+
+
+kp =
+
+    0.0500
+
+
+ki =
+
+     1
+
+
+C =
+ 
+  0.05 s + 1
+ 
+Continuous-time transfer function.
+
+
+G =
+ 
+        50 s + 1000
+  -----------------------
+  1000 s^2 + 300 s + 1010
+ 
+Continuous-time transfer function.
+
+
+L =
+ 
+       50 s + 1000
+  ---------------------
+  1000 s^2 + 250 s + 10
+ 
+Continuous-time transfer function.
+
+
+sysL =
+ 
+  A = 
+          x1     x2
+   x1  -0.25  -0.08
+   x2  0.125      0
+ 
+  B = 
+       u1
+   x1   4
+   x2   0
+ 
+  C = 
+           x1      x2
+   y1  0.0125       2
+ 
+  D = 
+       u1
+   y1   0
+ 
+Continuous-time state-space model.
+
+
+GainMargin =
+
+   Inf
+
+
+PhaseMargin =
+
+   17.1460
+
+
+Wcg =
+
+   NaN
+
+
+Wcp =
+
+    0.9900
+
+
+error_SS =
+
+    0.0047
+
+
+S = 
+
+  struct with fields:
+
+        RiseTime: 1.1611
+    SettlingTime: 25.7136
+     SettlingMin: 0.6095
+     SettlingMax: 1.6066
+       Overshoot: 62.2638
+      Undershoot: 0
+            Peak: 1.6066
+        PeakTime: 3.0701
+
+
+kp =
+
+    0.0500
+
+
+ki =
+
+   1.0000e-03
+
+
+C =
+ 
+  0.05 s + 0.001
+ 
+Continuous-time transfer function.
+
+
+G =
+ 
+        50 s + 1
+  ---------------------
+  1000 s^2 + 300 s + 11
+ 
+Continuous-time transfer function.
+
+
+L =
+ 
+        50 s + 1
+  ---------------------
+  1000 s^2 + 250 s + 10
+ 
+Continuous-time transfer function.
+
+
+sysL =
+ 
+  A = 
+          x1     x2
+   x1  -0.25  -0.08
+   x2  0.125      0
+ 
+  B = 
+         u1
+   x1  0.25
+   x2     0
+ 
+  C = 
+          x1     x2
+   y1    0.2  0.032
+ 
+  D = 
+       u1
+   y1   0
+ 
+Continuous-time state-space model.
+
+
+GainMargin =
+
+   Inf
+
+
+PhaseMargin =
+
+   Inf
+
+
+Wcg =
+
+   NaN
+
+
+Wcp =
+
+   NaN
+
+
+error_SS =
+
+    0.9089
+
+
+S = 
+
+  struct with fields:
+
+        RiseTime: 2.0130
+    SettlingTime: 98.7607
+     SettlingMin: 0.0896
+     SettlingMax: 0.1557
+       Overshoot: 71.3097
+      Undershoot: 0
+            Peak: 0.1557
+        PeakTime: 11.0995
+
+
+kp =
+
+    0.0050
+
+
+ki =
+
+   1.0000e-03
+
+
+C =
+ 
+  0.005 s + 0.001
+ 
+Continuous-time transfer function.
+
+
+G =
+ 
+         5 s + 1
+  ---------------------
+  1000 s^2 + 255 s + 11
+ 
+Continuous-time transfer function.
+
+
+L =
+ 
+         5 s + 1
+  ---------------------
+  1000 s^2 + 250 s + 10
+ 
+Continuous-time transfer function.
+
+
+sysL =
+ 
+  A = 
+          x1     x2
+   x1  -0.25  -0.08
+   x2  0.125      0
+ 
+  B = 
+          u1
+   x1  0.125
+   x2      0
+ 
+  C = 
+          x1     x2
+   y1   0.04  0.064
+ 
+  D = 
+       u1
+   y1   0
+ 
+Continuous-time state-space model.
+
+
+GainMargin =
+
+   Inf
+
+
+PhaseMargin =
+
+   Inf
+
+
+Wcg =
+
+   NaN
+
+
+Wcp =
+
+   NaN
+
+
+error_SS =
+
+    0.9091
+
+
+S = 
+
+  struct with fields:
+
+        RiseTime: 39.9456
+    SettlingTime: 71.1286
+     SettlingMin: 0.0822
+     SettlingMax: 0.0909
+       Overshoot: 0
+      Undershoot: 0
+            Peak: 0.0909
+        PeakTime: 191.7425
+
+
+table =
+
+  Columns 1 through 7
+
+    0.5000    0.1000    1.0000       Inf   95.7406    0.0910    3.9946
+    0.0500    1.0000    1.0000       Inf   17.1460    0.0047    1.1611
+    0.0500    0.0010    1.0000       Inf       Inf    0.9089    2.0130
+    0.0050    0.0010    1.0000       Inf       Inf    0.9091   39.9456
+
+  Column 8
+
+         0
+   62.2638
+   71.3097
+         0
+
+</pre><img vspace="5" hspace="5" src="P7_03.png" alt=""> <img vspace="5" hspace="5" src="P7_04.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% ES155 P7
+%% Problem 3
+
+%% 3.a
+P = tf(1, [1 10 3 10])
+S = 1000 * tf([1 1], [1 10])
+
+L = P*S
+
+figure(1); clf;
+subplot(1,2,1)
+bode(L)
+subplot(1,2,2)
+nyquist(L)
+
+saveas(gcf, "ES155P7_3a.jpg")
+
+pole(L)
+[GainMargin, PhaseMargin, Wcg, Wcp] = margin(L)
+
+%% 3.b
+P = tf(100, [100, 101, 1])
+S = tf([1 10], 1)
+
+L = P*S
+
+figure(2); clf;
+subplot(1,2,1)
+bode(L)
+subplot(1,2,2)
+nyquist(L)
+
+saveas(gcf, "ES155P7_3b.jpg")
+
+pole(L)
+[GainMargin, PhaseMargin, Wcg, Wcp] = margin(L)
+
+%% Problem 4
+
+% Constants
+a = 0.2
+b = 25
+c = 50
+T = 200
+m = 1000
+
+P = tf(T*b*a, [m, a*m + c, a*c])
+
+%% 4.a
+
+table = zeros(4,8);
+
+figure(3); clf;
+figure(4); clf;
+
+Kp = [0.5, 0.05, 0.05, 0.005]
+Ki = [0.1, 1, 0.001, 0.001]
+
+for i = 1:4
+   figure(3)
+   kp = Kp(i)
+   ki = Ki(i)
+   
+   table(i,1) = kp;
+   table(i,2) = ki;
+   
+   C = tf([kp, ki], 1)
+   G = feedback(P*C, 1)
+   
+   L = P*C
+   sysL = ss(L)
+   
+   sys = ss(G);
+   
+   table(i,3) = isstable(sys);
+   
+   [GainMargin, PhaseMargin, Wcg, Wcp] = margin(sysL)
+   
+   table(i,4) = GainMargin;
+   table(i,5) = PhaseMargin;
+      
+   [y, t] = step(sys);
+   if y(length(t)) == y(length(t-2))
+       error_SS = 1 - y(length(t))
+   else
+       error("Steady State not reached")
+   end
+   
+   table(i,6) = error_SS;
+   
+   S = stepinfo(sys)
+
+   table(i,7) = S.RiseTime;
+   table(i,8) = S.Overshoot;
+   
+   subplot(2,4,i)
+   pzmap(sys)
+   
+   subplot(2,4,i+4)
+   step(sys, S.RiseTime*10)
+      
+   figure(4)
+   subplot(2,4,i)
+   bode(sys)
+   subplot(2,4,i+4)
+   nyquist(sys)
+   
+   % plot the unit circle on the nyquist plot
+   theta = 0:0.1:2*pi;
+   x = cos(theta);
+   y = sin(theta);
+   hold on;
+   plot(x,y,'REPLACE_WITH_DASH_DASH');
+   hold off;
+end
+
+table
+
+
+
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>

@@ -1,0 +1,418 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6800) (preloaded format=pdflatex 2018.9.16)  15 NOV 2018 10:39
+entering extended mode
+**./lab2_report.tex
+(lab2_report.tex
+LaTeX2e <2018-04-01> patch level 5
+(/home/npham01/.miktex/texmfs/install/tex/latex/paper/journal.cls
+Document Class: journal 2008/05/30 1.0l LaTeX document class (wm).
+(/home/npham01/.miktex/texmfs/install/tex/latex/paper/paper.cls
+Document Class: paper 2008/05/30 1.0l LaTeX document class (wm).
+\hours=\count80
+\minutes=\count81
+(/home/npham01/.miktex/texmfs/install/tex/latex/base/size10.clo
+File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
+)
+\beforetitlespace=\skip41
+\c@part=\count82
+\c@section=\count83
+\c@subsection=\count84
+\c@subsubsection=\count85
+\c@paragraph=\count86
+\c@subparagraph=\count87
+\exampleindent=\skip42
+\c@figure=\count88
+\c@table=\count89
+\abovecaptionskip=\skip43
+\belowcaptionskip=\skip44
+\bibindent=\dimen102
+))
+(/home/npham01/.miktex/texmfs/install/tex/latex/tools/multicol.sty
+Package: multicol 2018/04/20 v1.8s multicolumn formatting (FMi)
+\c@tracingmulticols=\count90
+\mult@box=\box26
+\multicol@leftmargin=\dimen103
+\c@unbalance=\count91
+\c@collectmore=\count92
+\doublecol@number=\count93
+\multicoltolerance=\count94
+\multicolpretolerance=\count95
+\full@width=\dimen104
+\page@free=\dimen105
+\premulticols=\dimen106
+\postmulticols=\dimen107
+\multicolsep=\skip45
+\multicolbaselineskip=\skip46
+\partial@page=\box27
+\last@line=\box28
+\maxbalancingoverflow=\dimen108
+\mult@rightbox=\box29
+\mult@grightbox=\box30
+\mult@gfirstbox=\box31
+\mult@firstbox=\box32
+\@tempa=\box33
+\@tempa=\box34
+\@tempa=\box35
+\@tempa=\box36
+\@tempa=\box37
+\@tempa=\box38
+\@tempa=\box39
+\@tempa=\box40
+\@tempa=\box41
+\@tempa=\box42
+\@tempa=\box43
+\@tempa=\box44
+\@tempa=\box45
+\@tempa=\box46
+\@tempa=\box47
+\@tempa=\box48
+\@tempa=\box49
+\c@columnbadness=\count96
+\c@finalcolumnbadness=\count97
+\last@try=\dimen109
+\multicolovershoot=\dimen110
+\multicolundershoot=\dimen111
+\mult@nat@firstbox=\box50
+\colbreak@box=\box51
+\mc@col@check@num=\count98
+)
+(/home/npham01/.miktex/texmfs/install/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2017/09/02 v2.17a AMS math features
+\@mathmargin=\skip47
+
+For additional information on amsmath, use the `?' option.
+(/home/npham01/.miktex/texmfs/install/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01 AMS text
+
+(/home/npham01/.miktex/texmfs/install/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks14
+\ex@=\dimen112
+))
+(/home/npham01/.miktex/texmfs/install/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen113
+)
+(/home/npham01/.miktex/texmfs/install/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count99
+LaTeX Info: Redefining \frac on input line 213.
+\uproot@=\count100
+\leftroot@=\count101
+LaTeX Info: Redefining \overline on input line 375.
+\classnum@=\count102
+\DOTSCASE@=\count103
+LaTeX Info: Redefining \ldots on input line 472.
+LaTeX Info: Redefining \dots on input line 475.
+LaTeX Info: Redefining \cdots on input line 596.
+\Mathstrutbox@=\box52
+\strutbox@=\box53
+\big@size=\dimen114
+LaTeX Font Info:    Redeclaring font encoding OML on input line 712.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 713.
+\macc@depth=\count104
+\c@MaxMatrixCols=\count105
+\dotsspace@=\muskip10
+\c@parentequation=\count106
+\dspbrk@lvl=\count107
+\tag@help=\toks15
+\row@=\count108
+\column@=\count109
+\maxfields@=\count110
+\andhelp@=\toks16
+\eqnshift@=\dimen115
+\alignsep@=\dimen116
+\tagshift@=\dimen117
+\tagwidth@=\dimen118
+\totwidth@=\dimen119
+\lineht@=\dimen120
+\@envbody=\toks17
+\multlinegap=\skip48
+\multlinetaggap=\skip49
+\mathdisplay@stack=\toks18
+LaTeX Info: Redefining \[ on input line 2817.
+LaTeX Info: Redefining \] on input line 2818.
+)
+(/home/npham01/.miktex/texmfs/install/tex/latex/graphics/graphicx.sty
+Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/home/npham01/.miktex/texmfs/install/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks19
+)
+(/home/npham01/.miktex/texmfs/install/tex/latex/graphics/graphics.sty
+Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
+
+(/home/npham01/.miktex/texmfs/install/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+)
+(/home/npham01/.miktex/texmfs/install/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 99.
+
+(/home/npham01/.miktex/texmfs/install/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen121
+\Gin@req@width=\dimen122
+)
+(/home/npham01/.miktex/texmfs/install/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count111
+\float@exts=\toks20
+\float@box=\box54
+\@float@everytoks=\toks21
+\@floatcapt=\box55
+)
+(/home/npham01/.miktex/texmfs/install/tex/latex/enumitem/enumitem.sty
+Package: enumitem 2011/09/28 v3.5.2 Customized lists
+\labelindent=\skip50
+\enit@outerparindent=\dimen123
+\enit@toks=\toks22
+\enit@inbox=\box56
+\enitdp@description=\count112
+)
+(lab2_report.aux)
+\openout1 = `lab2_report.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
+LaTeX Font Info:    ... okay on input line 12.
+
+(/home/npham01/.miktex/texmfs/install/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count113
+\scratchdimen=\dimen124
+\scratchbox=\box57
+\nofMPsegments=\count114
+\nofMParguments=\count115
+\everyMPshowfont=\toks23
+\MPscratchCnt=\count116
+\MPscratchDim=\dimen125
+\MPnumerator=\count117
+\makeMPintoPDFobject=\count118
+\everyMPtoPDFconversion=\toks24
+) (/home/npham01/.miktex/texmfs/install/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
+
+(/home/npham01/.miktex/texmfs/install/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
+)
+(/home/npham01/.miktex/texmfs/install/tex/latex/oberdiek/grfext.sty
+Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
+
+(/home/npham01/.miktex/texmfs/install/tex/generic/oberdiek/kvdefinekeys.sty
+Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+
+(/home/npham01/.miktex/texmfs/install/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+)))
+(/home/npham01/.miktex/texmfs/install/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+
+(/home/npham01/.miktex/texmfs/install/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
+
+(/home/npham01/.miktex/texmfs/install/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
+
+(/home/npham01/.miktex/texmfs/install/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+(/home/npham01/.miktex/texmfs/install/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2018/09/10 v0.29 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/home/npham01/.miktex/texmfs/install/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2018/09/07 v3.3 Provides the ifpdf switch
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+38.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 456.
+)
+Article: 
+[1
+
+
+{/home/npham01/.miktex/texmfs/data/pdftex/config/pdftex.map}]
+<ES155Lab2_1b_step.jpg, id=13, 878.28125pt x 658.46pt>
+File: ES155Lab2_1b_step.jpg Graphic file (type jpg)
+<use ES155Lab2_1b_step.jpg>
+Package pdftex.def Info: ES155Lab2_1b_step.jpg  used on input line 82.
+(pdftex.def)             Requested size: 276.00105pt x 206.92368pt.
+ [2]
+<ES155Lab2_1c_steps.jpg, id=20, 572.1375pt x 794.97pt>
+File: ES155Lab2_1c_steps.jpg Graphic file (type jpg)
+<use ES155Lab2_1c_steps.jpg>
+Package pdftex.def Info: ES155Lab2_1c_steps.jpg  used on input line 99.
+(pdftex.def)             Requested size: 276.00105pt x 383.49785pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 113--113
+[]\OT1/cmr/m/n/10 Balanced and
+ []
+
+
+Underfull \hbox (badness 2626) in paragraph at lines 114--114
+[]\OT1/cmr/m/n/10 More Reactive to
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 114--114
+\OT1/cmr/m/n/10 keep $\OML/cmm/m/it/10 x$ \OT1/cmr/m/n/10 centered
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 114--114
+\OT1/cmr/m/n/10 to pushes for
+ []
+
+
+Underfull \hbox (badness 1472) in paragraph at lines 114--115
+\OT1/cmr/m/n/10 control means that the angle
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 115--115
+[]\OT1/cmr/m/n/10 Very jittery,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 115--115
+\OT1/cmr/m/n/10 overshoots even
+ []
+
+
+Underfull \hbox (badness 5022) in paragraph at lines 115--116
+\OT1/cmr/m/n/10 This oscillation prevents the
+ []
+
+
+Underfull \hbox (badness 1466) in paragraph at lines 117--117
+\OT1/cmr/m/n/10 be pushed in the
+ []
+
+
+Underfull \hbox (badness 5345) in paragraph at lines 117--117
+\OML/cmm/m/it/10 x$ \OT1/cmr/m/n/10 axis, while it
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 117--117
+\OT1/cmr/m/n/10 remains upright
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 117--118
+[]\OT1/cmr/m/n/10 Because there is so little
+ []
+
+
+Underfull \hbox (badness 1406) in paragraph at lines 118--119
+\OT1/cmr/m/n/10 a bit, which meant that the
+ []
+
+
+Underfull \hbox (badness 1259) in paragraph at lines 118--119
+\OT1/cmr/m/n/10 a good mechanism to control
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 119--120
+\OT1/cmr/m/n/10 control allows the system
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 119--120
+\OT1/cmr/m/n/10 to balance despite physical
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 120--120
+[]\OT1/cmr/m/n/10 Jittery behavior
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 120--120
+\OT1/cmr/m/n/10 reduces
+ []
+
+
+Underfull \hbox (badness 5622) in paragraph at lines 120--121
+[]\OT1/cmr/m/n/10 At this point, the physical
+ []
+
+
+Underfull \hbox (badness 1043) in paragraph at lines 120--121
+\OT1/cmr/m/n/10 system barely worked because
+ []
+
+
+Overfull \hbox (7.39992pt too wide) in paragraph at lines 109--123
+ [] 
+ []
+
+[3 <./ES155Lab2_1b_step.jpg>] [4 <./ES155Lab2_1c_steps.jpg>]
+Overfull \hbox (5.55612pt too wide) in paragraph at lines 125--126
+[]\OT1/cmr/m/n/10 The major takeaways from this lab were the importance in bala
+ncing controller
+ []
+
+
+Overfull \hbox (1.3802pt too wide) in paragraph at lines 125--126
+\OT1/cmr/m/n/10 results in reduced performance for the other. Another takeaway 
+was the difficulty
+ []
+
+[5] [6] (lab2_report.aux) ) 
+Here is how much of TeX's memory you used:
+ 2670 strings out of 494891
+ 37242 string characters out of 3178553
+ 110415 words of memory out of 3000000
+ 6269 multiletter control sequences out of 15000+200000
+ 9109 words of font info for 34 fonts, out of 3000000 for 9000
+ 0 hyphenation exceptions out of 8191
+ 41i,10n,25p,483b,253s stack positions out of 5000i,500n,10000p,200000b,50000s
+</home/npham01/.miktex/texmfs/install/fonts/type1/pu
+blic/amsfonts/cm/cmex10.pfb></home/npham01/.miktex/texmfs/install/fonts/type1/p
+ublic/amsfonts/cm/cmmi10.pfb></home/npham01/.miktex/texmfs/install/fonts/type1/
+public/amsfonts/cm/cmmi5.pfb></home/npham01/.miktex/texmfs/install/fonts/type1/
+public/amsfonts/cm/cmmi7.pfb></home/npham01/.miktex/texmfs/install/fonts/type1/
+public/amsfonts/cm/cmr10.pfb></home/npham01/.miktex/texmfs/install/fonts/type1/
+public/amsfonts/cm/cmr7.pfb></home/npham01/.miktex/texmfs/install/fonts/type1/p
+ublic/amsfonts/cm/cmr9.pfb></home/npham01/.miktex/texmfs/install/fonts/type1/pu
+blic/amsfonts/cm/cmss10.pfb></home/npham01/.miktex/texmfs/install/fonts/type1/p
+ublic/amsfonts/cm/cmss9.pfb></home/npham01/.miktex/texmfs/install/fonts/type1/p
+ublic/amsfonts/cm/cmssbx10.pfb></home/npham01/.miktex/texmfs/install/fonts/type
+1/public/amsfonts/cm/cmssi12.pfb></home/npham01/.miktex/texmfs/install/fonts/ty
+pe1/public/amsfonts/cm/cmsy10.pfb></home/npham01/.miktex/texmfs/install/fonts/t
+ype1/public/amsfonts/cm/cmtt10.pfb>
+Output written on lab2_report.pdf (6 pages, 212253 bytes).
+PDF statistics:
+ 75 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+

@@ -1,0 +1,906 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>ES155 Homework 8</title><meta name="generator" content="MATLAB 9.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-12-02"><meta name="DC.source" content="P8.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>ES155 Homework 8</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Problem 1</a></li><li><a href="#2">1.a Disk Drive</a></li><li><a href="#3">1.b Drug Administration</a></li><li><a href="#4">Problem 2</a></li><li><a href="#5">2.a Open Loop Bode Plot</a></li><li><a href="#6">2.b Show that assumptions are met</a></li><li><a href="#7">2.3 Step and Frequency Response of Closed Loop</a></li><li><a href="#8">Problem 3</a></li><li><a href="#9">3.a Compute Poles and Zeros</a></li><li><a href="#10">3.b Nyquist Plot</a></li><li><a href="#11">3.c Bode Plot</a></li></ul></div><h2 id="1">Problem 1</h2><pre class="codeinput">clear; clc;
+
+<span class="comment">% Given requirements</span>
+maxSSerr = 0.01;      <span class="comment">% 1% at zero frequency</span>
+minPM = 30 * pi / 180;  <span class="comment">% 30 degrees in radians</span>
+maxFreqError = 0.25;    <span class="comment">% Bandwidth defined as max freq with less than 25% error</span>
+
+<span class="comment">% Input the Plant transfer functions</span>
+P_1a = tf(1, [1, 10, 3, 10])
+P_1b = tf([1.5, 0.75], [1, 0.7, 0.05])
+</pre><pre class="codeoutput">
+P_1a =
+ 
+             1
+  -----------------------
+  s^3 + 10 s^2 + 3 s + 10
+ 
+Continuous-time transfer function.
+
+
+P_1b =
+ 
+     1.5 s + 0.75
+  ------------------
+  s^2 + 0.7 s + 0.05
+ 
+Continuous-time transfer function.
+
+</pre><h2 id="2">1.a Disk Drive</h2><p>For SSerr = 1/(1 + L(0)) &lt;= 0.01 requires L(0) &gt; 100 (+40dB) P_1a(0) = -20dB, so need to add +60dB.  Adding a "safety margin", try +70dB (3162.3) This results in a phase margin of -53 degrees.  Add a zero to improve this.  Default frequency of 1 gives PM of 9.14 degrees.  Moving frequency to 3.5 maximized the PM to 12 degrees.  This required a second zero to achieve a 90 degree PM (zero frequency at 1) However, this no longer constitutes a PID controller, as there are two zeros and no poles.  Introducing an integrator can allow the system to reach a steady state error of 0.  Simply including an integrator and a zero at 1 rad/s results in 0 steady state error with a 94 degree phase margin.  Thus,</p><pre class="codeinput">C_1a = tf([1, 1], [1, 0])
+L_1a = P_1a*C_1a
+sys_1a = feedback(L_1a, 1)
+
+<span class="comment">% Check that design goals were met</span>
+SSerr = 1 - dcgain(sys_1a)
+dbdrop = mag2db(maxFreqError);
+BW = bandwidth(sys_1a, dbdrop)
+[Gm, Pm] = margin(L_1a)                <span class="comment">% Computed with Open Loop</span>
+
+<span class="keyword">if</span> (SSerr &lt; maxSSerr) &amp; (Pm &gt; minPM) &amp; isstable(sys_1a)
+    fprintf(<span class="string">"The system satisfies the requirements\n"</span>)
+<span class="keyword">else</span>
+    fprintf(<span class="string">"The system failed to satisfy the requirements\n"</span>)
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">
+C_1a =
+ 
+  s + 1
+  -----
+    s
+ 
+Continuous-time transfer function.
+
+
+L_1a =
+ 
+             s + 1
+  ---------------------------
+  s^4 + 10 s^3 + 3 s^2 + 10 s
+ 
+Continuous-time transfer function.
+
+
+sys_1a =
+ 
+               s + 1
+  -------------------------------
+  s^4 + 10 s^3 + 3 s^2 + 11 s + 1
+ 
+Continuous-time transfer function.
+
+
+SSerr =
+
+     0
+
+
+BW =
+
+    1.2651
+
+
+Gm =
+
+    2.1699
+
+
+Pm =
+
+   94.0404
+
+The system satisfies the requirements
+</pre><h2 id="3">1.b Drug Administration</h2><p>Again, want L(0) &gt; 100 (+40dB). P_1b(0) = 15 (+23.5dB), so need to add about +20dB (10). The resulting phase margin is 90.8 degrees, so the controller is fine</p><pre class="codeinput">C_1b = 10
+L_1b = P_1b*C_1b
+sys_1b = feedback(L_1b, 1)
+
+<span class="comment">% Check that design goals were met</span>
+SSerr = 1 - dcgain(sys_1b)
+dbdrop = mag2db(maxFreqError);
+BW = bandwidth(sys_1b, dbdrop)
+[Gm, Pm] = margin(L_1b)                <span class="comment">% Computed with Open Loop</span>
+
+<span class="keyword">if</span> (SSerr &lt; maxSSerr) &amp; (Pm &gt; minPM) &amp; isstable(sys_1b)
+    fprintf(<span class="string">"The system satisfies the requirements\n"</span>)
+<span class="keyword">else</span>
+    fprintf(<span class="string">"The system failed to satisfy the requirements\n"</span>)
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">
+C_1b =
+
+    10
+
+
+L_1b =
+ 
+      15 s + 7.5
+  ------------------
+  s^2 + 0.7 s + 0.05
+ 
+Continuous-time transfer function.
+
+
+sys_1b =
+ 
+      15 s + 7.5
+  -------------------
+  s^2 + 15.7 s + 7.55
+ 
+Continuous-time transfer function.
+
+
+SSerr =
+
+    0.0066
+
+
+BW =
+
+   58.4553
+
+
+Gm =
+
+   Inf
+
+
+Pm =
+
+   90.7636
+
+The system satisfies the requirements
+</pre><h2 id="4">Problem 2</h2><pre class="codeinput">clear; clc;
+
+<span class="comment">% Given Constants</span>
+g = 9.8;
+l = 0.05;
+m = 1.5;
+J = 0.0475;
+c = 0.05;
+r = 0.25;
+
+<span class="comment">% The given plant transfer function</span>
+P_2 = tf(r, [J, c, m*g*l])
+
+<span class="comment">% Design Goals</span>
+maxSSerr = 0.02        <span class="comment">% SS error &lt; 2%</span>
+BWerr = 0.1    <span class="comment">% 10% tracking bandwidth from 0 to 1 rad/s</span>
+minBW = 1
+minPM = 40             <span class="comment">% Phase Margin &gt; 40 degrees</span>
+
+<span class="comment">% Use controlSystemDesigner(P2)</span>
+
+<span class="comment">%Want SSerr = 1/(1 + L(0)) &lt; 0.02, so L(0) &gt; 50 (+34dB)</span>
+<span class="comment">% The open loop P(0) gain is 0.3401 (-9.4dB), so need to add &gt;44 dB of gain</span>
+<span class="comment">% Try +50dB = 316.28</span>
+
+<span class="comment">% Then to acheive BW tracking, need to have T = L(s)/(1 + L(s)) &lt; 0.1 up to</span>
+<span class="comment">% s = 1.  Assuming large L(s), this gives L(s) &gt; 10 (+20dB).  This is</span>
+<span class="comment">% satisfied.</span>
+
+<span class="comment">% To improve the phase margin, need to add a zero at s = 1.  This gives a</span>
+<span class="comment">% 90 degree phase margin.</span>
+
+C_2 = 316.28 * tf([1,1],1)
+L_2 = P_2*C_2
+sys_2 = feedback(L_2, 1)
+
+<span class="comment">% Check</span>
+SSerr = 1 - dcgain(sys_2)
+dbdrop = mag2db(BWerr);
+BW = bandwidth(sys_2, dbdrop)
+[Gm, Pm] = margin(L_2)     <span class="comment">% Computed with Open Loop</span>
+
+<span class="keyword">if</span> (SSerr &lt; maxSSerr) &amp; (Pm &gt; minPM) &amp; (BW &gt; minBW)
+    fprintf(<span class="string">"The system satisfies the requirements\n"</span>)
+<span class="keyword">else</span>
+    fprintf(<span class="string">"The system failed to satisfy the requirements\n"</span>)
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">
+P_2 =
+ 
+             0.25
+  ---------------------------
+  0.0475 s^2 + 0.05 s + 0.735
+ 
+Continuous-time transfer function.
+
+
+maxSSerr =
+
+    0.0200
+
+
+BWerr =
+
+    0.1000
+
+
+minBW =
+
+     1
+
+
+minPM =
+
+    40
+
+
+C_2 =
+ 
+  316.3 s + 316.3
+ 
+Continuous-time transfer function.
+
+
+L_2 =
+ 
+        79.07 s + 79.07
+  ---------------------------
+  0.0475 s^2 + 0.05 s + 0.735
+ 
+Continuous-time transfer function.
+
+
+sys_2 =
+ 
+        79.07 s + 79.07
+  ---------------------------
+  0.0475 s^2 + 79.12 s + 79.8
+ 
+Continuous-time transfer function.
+
+
+SSerr =
+
+    0.0092
+
+
+BW =
+
+   1.6718e+04
+
+
+Gm =
+
+   Inf
+
+
+Pm =
+
+   90.0018
+
+The system satisfies the requirements
+</pre><h2 id="5">2.a Open Loop Bode Plot</h2><pre class="codeinput"><span class="comment">% get the bode plot values</span>
+[mag, phase, wout] = bode(P_2);
+mag = reshape(mag, [length(mag), 1]);
+phase = reshape(phase, [length(phase), 1]);
+
+
+
+<span class="comment">% plot</span>
+figure(1); clf;
+subplot(2,1,1)
+semilogx(wout, mag2db(mag))
+title({<span class="string">'Open Loop Bode Plot'</span>, <span class="string">''</span>, <span class="string">'Magnitude'</span>})
+ylabel(<span class="string">'Magnitude (dB)'</span>)
+
+subplot(2,1,2)
+semilogx(wout, phase)
+title(<span class="string">"Phase"</span>)
+xlabel(<span class="string">'\omega (rad/s)'</span>)
+ylabel(<span class="string">'Phase (deg)'</span>)
+
+<span class="comment">% given the desired tracing error, compute the necessary gain in the BW</span>
+<span class="comment">% T = L(s)/(1 + L(s)) &lt;= BWerr, so L(s) &gt; 1/BWerr in the BW</span>
+BWgain = 1/BWerr
+
+<span class="comment">% given the desired steady state error, compute necessary gain at zero</span>
+<span class="comment">% frequency.  S = 1/(1 + L(s)) &lt;= SSerr, so L(s) &gt; 1/SSerr</span>
+SSgain = 1/maxSSerr
+
+subplot(2,1,1)
+Xlim = xlim;
+x = Xlim(1);
+y = mag2db(BWgain);
+w = minBW - x;
+h = mag2db(SSgain) - y;
+rectangle(<span class="string">'Position'</span>, [x,y,w,h], <span class="string">'LineStyle'</span>, <span class="string">':'</span>)
+
+<span class="comment">% Show phase margin line</span>
+[Gm,Pm,Wcg,Wcp] = margin(P_2);
+phaseAtMargin = -180 + minPM;
+subplot(2,1,2)
+Ylim = ylim;
+hold <span class="string">on</span>;
+plot([Xlim(1), Xlim(2)], [phaseAtMargin, phaseAtMargin], <span class="string">':k'</span>)
+plot([Wcp, Wcp], [Ylim(1), Ylim(2)], <span class="string">':k'</span>)
+hold <span class="string">off</span>;
+</pre><pre class="codeoutput">
+BWgain =
+
+    10
+
+
+SSgain =
+
+    50
+
+</pre><img vspace="5" hspace="5" src="P8_01.png" alt=""> <h2 id="6">2.b Show that assumptions are met</h2><pre class="codeinput"><span class="comment">% get the bode plot values</span>
+[mag, phase, wout] = bode(L_2, {10^-2, 10^4});
+mag = reshape(mag, [length(mag), 1]);
+phase = reshape(phase, [length(phase), 1]);
+
+
+<span class="comment">% plot</span>
+figure(2); clf;
+subplot(2,1,1)
+semilogx(wout, mag2db(mag))
+title({<span class="string">'Open Loop Bode Plot with Controller'</span>, <span class="string">''</span>, <span class="string">'Magnitude'</span>})
+ylabel(<span class="string">'Magnitude (dB)'</span>)
+
+subplot(2,1,2)
+semilogx(wout, phase)
+title(<span class="string">"Phase"</span>)
+xlabel(<span class="string">'\omega (rad/s)'</span>)
+ylabel(<span class="string">'Phase (deg)'</span>)
+
+<span class="comment">% given the desired tracing error, compute the necessary gain in the BW</span>
+<span class="comment">% T = L(s)/(1 + L(s)) &lt;= BWerr, so L(s) &gt; 1/BWerr in the BW</span>
+BWgain = 1/BWerr
+
+<span class="comment">% given the desired steady state error, compute necessary gain at zero</span>
+<span class="comment">% frequency.  S = 1/(1 + L(s)) &lt;= SSerr, so L(s) &gt; 1/SSerr</span>
+SSgain = 1/maxSSerr
+
+subplot(2,1,1)
+Xlim = xlim;
+x = Xlim(1);
+y = mag2db(BWgain);
+w = minBW - x;
+h = mag2db(SSgain) - y;
+rectangle(<span class="string">'Position'</span>, [x,y,w,h], <span class="string">'LineStyle'</span>, <span class="string">':'</span>)
+
+<span class="comment">% Show phase margin line</span>
+[Gm,Pm,Wcg,Wcp] = margin(L_2);
+phaseAtMargin = -180 + minPM;
+subplot(2,1,2)
+hold <span class="string">on</span>;
+plot([Xlim(1), Xlim(2)], [phaseAtMargin, phaseAtMargin], <span class="string">':k'</span>)
+Ylim = ylim;
+Ylim = [Ylim(1) - 10, Ylim(2)];
+ylim(Ylim);
+plot([Wcp, Wcp], [Ylim(1), Ylim(2)], <span class="string">':k'</span>)
+hold <span class="string">off</span>;
+</pre><pre class="codeoutput">
+BWgain =
+
+    10
+
+
+SSgain =
+
+    50
+
+</pre><img vspace="5" hspace="5" src="P8_02.png" alt=""> <h2 id="7">2.3 Step and Frequency Response of Closed Loop</h2><pre class="codeinput">figure(3);clf;
+subplot(1,2,1);
+step(sys_2)
+subplot(1,2,2);
+bodeplot(sys_2)
+stepinfo(sys_2)
+SSerr
+</pre><pre class="codeoutput">
+ans = 
+
+  struct with fields:
+
+        RiseTime: 0.0013
+    SettlingTime: 0.0021
+     SettlingMin: 0.8953
+     SettlingMax: 0.9989
+       Overshoot: 0.8180
+      Undershoot: 0
+            Peak: 0.9989
+        PeakTime: 0.0041
+
+
+SSerr =
+
+    0.0092
+
+</pre><img vspace="5" hspace="5" src="P8_03.png" alt=""> <h2 id="8">Problem 3</h2><pre class="codeinput">clear; clc;
+
+<span class="comment">% Given constants</span>
+k = 4000;
+r = 25;
+
+P_3 = tf(k, [1, 0, -r^2])
+
+<span class="comment">% The system has two poles, so to stabalize it, add a zero.  Adding a zero</span>
+<span class="comment">% at frequency = 1 stabilizes it.</span>
+
+C_3 = tf([1, 1], 1)
+L_3 = P_3*C_3
+sys_3 = feedback(L_3, 1)
+
+<span class="comment">% Check</span>
+<span class="keyword">if</span> isstable(sys_3)
+    fprintf(<span class="string">"The system was stabilized\n"</span>)
+<span class="keyword">else</span>
+    fprintf(<span class="string">"The system was not stabilized\n"</span>)
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">
+P_3 =
+ 
+    4000
+  ---------
+  s^2 - 625
+ 
+Continuous-time transfer function.
+
+
+C_3 =
+ 
+  s + 1
+ 
+Continuous-time transfer function.
+
+
+L_3 =
+ 
+  4000 s + 4000
+  -------------
+    s^2 - 625
+ 
+Continuous-time transfer function.
+
+
+sys_3 =
+ 
+     4000 s + 4000
+  -------------------
+  s^2 + 4000 s + 3375
+ 
+Continuous-time transfer function.
+
+The system was stabilized
+</pre><h2 id="9">3.a Compute Poles and Zeros</h2><pre class="codeinput"><span class="comment">% Open Loop</span>
+fprintf(<span class="string">"Open Loop zeros, poles, and gain\n"</span>)
+[L_3_n, L_3_d] = tfdata(L_3, <span class="string">'v'</span>);
+[z, p, k] = tf2zpk(L_3_n, L_3_d)
+
+<span class="comment">% Closed Loop</span>
+fprintf(<span class="string">"Closed Loop zeros, poles, and gain\n"</span>)
+[sys_3_n, sys_3_d] = tfdata(sys_3, <span class="string">'v'</span>);
+[z, p, k] = tf2zpk(sys_3_n, sys_3_d)
+</pre><pre class="codeoutput">Open Loop zeros, poles, and gain
+
+z =
+
+    -1
+
+
+p =
+
+   25.0000
+  -25.0000
+
+
+k =
+
+        4000
+
+Closed Loop zeros, poles, and gain
+
+z =
+
+    -1
+
+
+p =
+
+   1.0e+03 *
+
+   -3.9992
+   -0.0008
+
+
+k =
+
+        4000
+
+</pre><h2 id="10">3.b Nyquist Plot</h2><p>The open loop system actually does work, as the encirclement is CCW, so N still equals 0.  The closed loop shows that the system is in fact stable.</p><pre class="codeinput">figure(4); clf;
+subplot(1,2,1)
+nyquist(L_3)
+title(<span class="string">"Nyquist Plot of Open Loop L = P*C"</span>)
+
+subplot(1,2,2)
+nyquist(sys_3)
+title(<span class="string">"Nyquist Plot of Closed Loop"</span>)
+</pre><img vspace="5" hspace="5" src="P8_04.png" alt=""> <h2 id="11">3.c Bode Plot</h2><pre class="codeinput">S = 1/(1 + L_3)
+T = L_3/(1 + L_3)
+
+figure(5); clf;
+subplot(1,2,1)
+bode(S)
+
+subplot(1,2,2)
+bode(T)
+</pre><pre class="codeoutput">
+S =
+ 
+       s^2 - 625
+  -------------------
+  s^2 + 4000 s + 3375
+ 
+Continuous-time transfer function.
+
+
+T =
+ 
+      4000 s^3 + 4000 s^2 - 2.5e06 s - 2.5e06
+  -----------------------------------------------
+  s^4 + 4000 s^3 + 2750 s^2 - 2.5e06 s - 2.109e06
+ 
+Continuous-time transfer function.
+
+</pre><img vspace="5" hspace="5" src="P8_05.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% ES155 Homework 8
+%% Problem 1
+
+clear; clc;
+
+% Given requirements
+maxSSerr = 0.01;      % 1% at zero frequency
+minPM = 30 * pi / 180;  % 30 degrees in radians
+maxFreqError = 0.25;    % Bandwidth defined as max freq with less than 25% error
+
+% Input the Plant transfer functions
+P_1a = tf(1, [1, 10, 3, 10])
+P_1b = tf([1.5, 0.75], [1, 0.7, 0.05])
+
+%% 1.a Disk Drive
+% For SSerr = 1/(1 + L(0)) <= 0.01 requires L(0) > 100 (+40dB)
+% P_1a(0) = -20dB, so need to add +60dB.  Adding a "safety margin", try +70dB
+% (3162.3)
+% This results in a phase margin of -53 degrees.  Add a zero to improve
+% this.  Default frequency of 1 gives PM of 9.14 degrees.  Moving frequency
+% to 3.5 maximized the PM to 12 degrees.  This required a second zero to
+% achieve a 90 degree PM (zero frequency at 1)
+% However, this no longer constitutes a PID controller, as there are two
+% zeros and no poles.  Introducing an integrator can allow the system to
+% reach a steady state error of 0.  Simply including an integrator and a
+% zero at 1 rad/s results in 0 steady state error with a 94 degree phase
+% margin.  Thus,
+C_1a = tf([1, 1], [1, 0])
+L_1a = P_1a*C_1a
+sys_1a = feedback(L_1a, 1)
+
+% Check that design goals were met
+SSerr = 1 - dcgain(sys_1a)
+dbdrop = mag2db(maxFreqError);
+BW = bandwidth(sys_1a, dbdrop)
+[Gm, Pm] = margin(L_1a)                % Computed with Open Loop
+
+if (SSerr < maxSSerr) & (Pm > minPM) & isstable(sys_1a)
+    fprintf("The system satisfies the requirements\n")
+else
+    fprintf("The system failed to satisfy the requirements\n")
+end
+
+%% 1.b Drug Administration
+% Again, want L(0) > 100 (+40dB).
+% P_1b(0) = 15 (+23.5dB), so need to add about +20dB (10).
+% The resulting phase margin is 90.8 degrees, so the controller is fine
+C_1b = 10
+L_1b = P_1b*C_1b
+sys_1b = feedback(L_1b, 1)
+
+% Check that design goals were met
+SSerr = 1 - dcgain(sys_1b)
+dbdrop = mag2db(maxFreqError);
+BW = bandwidth(sys_1b, dbdrop)
+[Gm, Pm] = margin(L_1b)                % Computed with Open Loop
+
+if (SSerr < maxSSerr) & (Pm > minPM) & isstable(sys_1b)
+    fprintf("The system satisfies the requirements\n")
+else
+    fprintf("The system failed to satisfy the requirements\n")
+end
+
+
+%% Problem 2
+
+clear; clc;
+
+% Given Constants
+g = 9.8;
+l = 0.05;
+m = 1.5;
+J = 0.0475;
+c = 0.05;
+r = 0.25;
+
+% The given plant transfer function
+P_2 = tf(r, [J, c, m*g*l])
+
+% Design Goals
+maxSSerr = 0.02        % SS error < 2%
+BWerr = 0.1    % 10% tracking bandwidth from 0 to 1 rad/s
+minBW = 1
+minPM = 40             % Phase Margin > 40 degrees
+
+% Use controlSystemDesigner(P2)
+
+%Want SSerr = 1/(1 + L(0)) < 0.02, so L(0) > 50 (+34dB)
+% The open loop P(0) gain is 0.3401 (-9.4dB), so need to add >44 dB of gain
+% Try +50dB = 316.28
+
+% Then to acheive BW tracking, need to have T = L(s)/(1 + L(s)) < 0.1 up to
+% s = 1.  Assuming large L(s), this gives L(s) > 10 (+20dB).  This is
+% satisfied.
+
+% To improve the phase margin, need to add a zero at s = 1.  This gives a
+% 90 degree phase margin.
+
+C_2 = 316.28 * tf([1,1],1)
+L_2 = P_2*C_2
+sys_2 = feedback(L_2, 1)
+
+% Check
+SSerr = 1 - dcgain(sys_2)
+dbdrop = mag2db(BWerr);
+BW = bandwidth(sys_2, dbdrop)
+[Gm, Pm] = margin(L_2)     % Computed with Open Loop
+
+if (SSerr < maxSSerr) & (Pm > minPM) & (BW > minBW)
+    fprintf("The system satisfies the requirements\n")
+else
+    fprintf("The system failed to satisfy the requirements\n")
+end
+
+%% 2.a Open Loop Bode Plot
+
+% get the bode plot values
+[mag, phase, wout] = bode(P_2);
+mag = reshape(mag, [length(mag), 1]);
+phase = reshape(phase, [length(phase), 1]);
+
+
+
+% plot
+figure(1); clf;
+subplot(2,1,1)
+semilogx(wout, mag2db(mag))
+title({'Open Loop Bode Plot', '', 'Magnitude'})
+ylabel('Magnitude (dB)')
+
+subplot(2,1,2)
+semilogx(wout, phase)
+title("Phase")
+xlabel('\omega (rad/s)')
+ylabel('Phase (deg)')
+
+% given the desired tracing error, compute the necessary gain in the BW
+% T = L(s)/(1 + L(s)) <= BWerr, so L(s) > 1/BWerr in the BW
+BWgain = 1/BWerr
+
+% given the desired steady state error, compute necessary gain at zero
+% frequency.  S = 1/(1 + L(s)) <= SSerr, so L(s) > 1/SSerr
+SSgain = 1/maxSSerr
+
+subplot(2,1,1)
+Xlim = xlim;
+x = Xlim(1);
+y = mag2db(BWgain);
+w = minBW - x;
+h = mag2db(SSgain) - y;
+rectangle('Position', [x,y,w,h], 'LineStyle', ':')
+
+% Show phase margin line
+[Gm,Pm,Wcg,Wcp] = margin(P_2);
+phaseAtMargin = -180 + minPM;
+subplot(2,1,2)
+Ylim = ylim;
+hold on;
+plot([Xlim(1), Xlim(2)], [phaseAtMargin, phaseAtMargin], ':k')
+plot([Wcp, Wcp], [Ylim(1), Ylim(2)], ':k')
+hold off;
+
+%% 2.b Show that assumptions are met
+
+% get the bode plot values
+[mag, phase, wout] = bode(L_2, {10^-2, 10^4});
+mag = reshape(mag, [length(mag), 1]);
+phase = reshape(phase, [length(phase), 1]);
+
+
+% plot
+figure(2); clf;
+subplot(2,1,1)
+semilogx(wout, mag2db(mag))
+title({'Open Loop Bode Plot with Controller', '', 'Magnitude'})
+ylabel('Magnitude (dB)')
+
+subplot(2,1,2)
+semilogx(wout, phase)
+title("Phase")
+xlabel('\omega (rad/s)')
+ylabel('Phase (deg)')
+
+% given the desired tracing error, compute the necessary gain in the BW
+% T = L(s)/(1 + L(s)) <= BWerr, so L(s) > 1/BWerr in the BW
+BWgain = 1/BWerr
+
+% given the desired steady state error, compute necessary gain at zero
+% frequency.  S = 1/(1 + L(s)) <= SSerr, so L(s) > 1/SSerr
+SSgain = 1/maxSSerr
+
+subplot(2,1,1)
+Xlim = xlim;
+x = Xlim(1);
+y = mag2db(BWgain);
+w = minBW - x;
+h = mag2db(SSgain) - y;
+rectangle('Position', [x,y,w,h], 'LineStyle', ':')
+
+% Show phase margin line
+[Gm,Pm,Wcg,Wcp] = margin(L_2);
+phaseAtMargin = -180 + minPM;
+subplot(2,1,2)
+hold on;
+plot([Xlim(1), Xlim(2)], [phaseAtMargin, phaseAtMargin], ':k')
+Ylim = ylim;
+Ylim = [Ylim(1) - 10, Ylim(2)];
+ylim(Ylim);
+plot([Wcp, Wcp], [Ylim(1), Ylim(2)], ':k')
+hold off;
+
+%% 2.3 Step and Frequency Response of Closed Loop
+
+figure(3);clf;
+subplot(1,2,1);
+step(sys_2)
+subplot(1,2,2);
+bodeplot(sys_2)
+stepinfo(sys_2)
+SSerr
+
+
+%% Problem 3
+clear; clc;
+
+% Given constants
+k = 4000;
+r = 25;
+
+P_3 = tf(k, [1, 0, -r^2])
+
+% The system has two poles, so to stabalize it, add a zero.  Adding a zero
+% at frequency = 1 stabilizes it. 
+
+C_3 = tf([1, 1], 1)
+L_3 = P_3*C_3
+sys_3 = feedback(L_3, 1)
+
+% Check
+if isstable(sys_3)
+    fprintf("The system was stabilized\n")
+else
+    fprintf("The system was not stabilized\n")
+end
+
+%% 3.a Compute Poles and Zeros
+
+% Open Loop
+fprintf("Open Loop zeros, poles, and gain\n")
+[L_3_n, L_3_d] = tfdata(L_3, 'v');
+[z, p, k] = tf2zpk(L_3_n, L_3_d)
+
+% Closed Loop
+fprintf("Closed Loop zeros, poles, and gain\n")
+[sys_3_n, sys_3_d] = tfdata(sys_3, 'v');
+[z, p, k] = tf2zpk(sys_3_n, sys_3_d)
+
+%% 3.b Nyquist Plot
+% The open loop system actually does work, as the encirclement is CCW, so N
+% still equals 0.  The closed loop shows that the system is in fact stable.
+
+figure(4); clf;
+subplot(1,2,1)
+nyquist(L_3)
+title("Nyquist Plot of Open Loop L = P*C")
+
+subplot(1,2,2)
+nyquist(sys_3)
+title("Nyquist Plot of Closed Loop")
+
+%% 3.c Bode Plot
+S = 1/(1 + L_3)
+T = L_3/(1 + L_3)
+
+figure(5); clf;
+subplot(1,2,1)
+bode(S)
+
+subplot(1,2,2)
+bode(T)
+
+
+
+
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>
