@@ -1,0 +1,421 @@
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage{graphicx}   % for pictures
+\usepackage{amsthm}     % for math
+\usepackage{amsmath, mathtools}    %   more math
+\usepackage{amsfonts}   %   more math
+\usepackage{physics}    % more symbols
+\usepackage{circuitikz} % for circuit diagrams
+\usepackage{amssymb}    % math symbols
+\usepackage{siunitx}    % units
+\usepackage{mathrsfs}   % fancy text
+\usepackage{color}      % colored letters for notes and reminders
+\usepackage{float}      % for image location
+
+%The amsthm package lets you format different types of mathematical ideas nicely. You use it by defining "\newtheorem"s as below:
+\newtheorem{problem}{Problem}
+\newtheorem{theorem}{Theorem}
+\newtheorem*{proposition}{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{defn}[theorem]{Definition}
+
+% Magins
+
+\setlength{\voffset}{0.1in}
+\setlength{\paperwidth}{8.5in}
+\setlength{\paperheight}{11in}
+\setlength{\headheight}{14pt}
+\setlength{\headsep}{0.5in}
+\setlength{\textheight}{11in}
+\setlength{\textheight}{8in}
+\setlength{\topmargin}{-0.25in}
+\setlength{\textwidth}{7in}
+\setlength{\topskip}{0in}
+\setlength{\oddsidemargin}{-0.25in}
+\setlength{\evensidemargin}{-0.25in}
+
+% For images in this document:
+\graphicspath{ {images/} }
+
+% User Defined Commands
+\newcommand{\nder}[2]{\frac{d^{#1} #2}{d t^{#1}}}   % The nth derivative wrt t: {n}{x(t)}
+\newcommand{\der}[1]{\frac{d #1}{d t}}              % Derivative wrt t: {x(t)}
+\newcommand{\infint}{\int_{-\infty}^{\infty}}       % Integral from - infinity to + infinity
+\newcommand{\infsum}[1]{\sum_{#1 = -\infty}^{\infty}}% Sum of a variable from - to + infinity
+\newcommand{\para}[1]{\left( #1 \right)}            % Instead of writing parenthesis all the time
+
+% User Command for Wider Matrices
+\makeatletter
+\renewcommand*\env@matrix[1][\arraystretch]{%
+  \edef\arraystretch{#1}%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{*\c@MaxMatrixCols c}}
+\makeatother
+
+
+% Heading:
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{Nicholas Pham}
+\chead{ES 155}          %   Change the Class!!
+\rhead{Final Exam}   %   Change the Problem Set Number!!
+
+
+% ----- BEGIN DOCUMENT-----
+\begin{document}
+
+\textbf{\huge{ES 155 Final Exam}}    %   Change the Class and Problem Set Number!!
+\normalsize
+
+\begin{enumerate}
+
+    \item % Problem 1
+    The two systems to be analyzed are:
+
+    System 1:
+    \begin{align*}
+        \dot{x_1} &= x_2 \\
+        \dot{x_2} &= -2g \sin(x_1) + \sin(x_2)
+    \end{align*}
+
+    System 2:
+    \begin{align*}
+        \dot{x_1} &= x_1 - x_2 \\
+        \dot{x_2} &= 2x_1 - x_2 - 2c x_1^2 + 2c x_1 x_2
+    \end{align*}
+
+    \begin{enumerate}
+        \item % 1.a
+        The equilibrium point of a system occurs when $\dot{x} = 0$.  For the first system:
+
+        \begin{align*}
+            \dot{x_1} = 0 &= x_2 \\
+            \dot{x_2} = 0 &= -2g \sin(x_1) + \sin(x_2)  \\
+            &= -2g \sin(x_1) \\
+            &= - \sin(x_1) \\
+            x_1 &= 0 \text{ or } \pi
+        \end{align*}
+
+        so the equilibrium points $(x_1, x_2)$ are $(0,0)$ and $(\pi, 0)$.
+
+        For the second system:
+
+        \begin{align*}
+            \dot{x_1} = 0 &= x_1  - x_2 \quad \implies \quad x_1 = x_2 \\
+            \dot{x_2} = 0 &= 2x_1 - x_2 - 2c x_1^2 + 2c x_1 x_2 \\
+            &= 2x_1 - x_1 - 2c x_1^2 + 2c x_1 x_1 = x_1 \\
+            &\implies x_1 = x_2 = 0
+        \end{align*}
+
+        so the equilbirium point of the second system is just the origin $(0,0)$.
+
+        \item % 1.b
+        For the first system, first linearize around the first equilibrium point, $(0,0)$.
+
+        \begin{align*}
+            \dot{x_1} &= x_2 \\
+            \dot{x_2} &= -2 g x_1 + x_2 \quad \text{because $\sin(x) = x$ near $x = 0$}
+        \end{align*}
+
+        Now linearize around the second equilibrium point $(\pi, 0)$, which results in the sign of the second equation being flipped for the $x_1$ term, as the approximation of $\sin(x)$ near $x = \pm \pi$ is $-x$:
+
+        \begin{align*}
+            \dot{x_1} &= x_2 \\
+            \dot{x_2} &= 2 g x_1 + x_2
+        \end{align*}
+
+        The second system must be linearized using the Jacobian.
+
+        \begin{align*}
+            \text{Let} \\
+            f_1 &= \dot{x_1} = x_1 - x_2 \\
+            f_2 &= \dot{x_2} = 2x_1 - x_2 - 2c x_1^2 + 2c x_1 x_2 \\
+            \text{Therefore} \\
+            \dot{x} &= A(x - x^*)\\
+            \text{where } x^* \text{ is an equilibrium point and} \\
+            A &= \begin{bmatrix}
+                \dfrac{\partial f_1}{\partial x_1} & \dfrac{\partial f_1}{\partial x_2} \\
+                \dfrac{\partial f_2}{\partial x_1} & \dfrac{\partial f_2}{\partial x_2} 
+            \end{bmatrix} \\
+            &= \begin{bmatrix} 
+                1 & -1 \\
+                2 - 4c x_1^* + 2c x_2^* & -1 +2c x_1^*
+            \end{bmatrix} = 
+            \begin{bmatrix}
+                1 & -1 \\
+                2 & -1
+            \end{bmatrix}
+        \end{align*}
+
+        Because $(x_1^*, x_2^*) = (0,0) \implies \begin{bmatrix} x_1 - x_1^* \\ x_2 - x_2^* \end{bmatrix} = \begin{bmatrix} x_1 \\ x_2 \end{bmatrix}$, so
+
+        \begin{align*}
+            \dot{x} &= A(x - x^*) = Ax =
+            \begin{bmatrix}
+                1 & -1 \\
+                2 & -1
+            \end{bmatrix}
+            \begin{bmatrix}
+                x_1 \\
+                x_2
+            \end{bmatrix} \\
+            \text{or} \\
+            \dot{x_1} &=  x_1 - x_2 \\
+            \dot{x_2} &= 2x_1 - x_2
+        \end{align*}
+
+        \item % 1.c
+        The origin is an equilibrium point of both systems.  For the first system, the $A$ matrix is 
+
+        $$ A = \begin{bmatrix} 0 & 1 \\-2g & 1 \end{bmatrix} $$
+
+        Because the eigenvalues of $A$ are solutions to the characteristic equation
+
+        $$ \mathtt{det} \left( A - \lambda I \right) = \mathtt{det} \begin{bmatrix} -\lambda & 1 \\-2g & 1 - \lambda \end{bmatrix} = \lambda^2 - \lambda + 2g = 0 $$
+
+        and the roots of this equation both have negative real parts, the linearization of the first system is not asymptotically stable.
+
+        The stability of the second system can be evaluated in the same way.  In this case, MATLAB can be used to compute the eigenvalues of $A = \begin{bmatrix} 1 & -1 \\ 2 & -1 \end{bmatrix} = \pm i$.  Because the definition of an asymptotically stable system requires that the real parts of these eigenvalues must be strictly negative, this linearization is not asymptotically stable.
+    \end{enumerate}
+
+    \item % Problem 2
+    The system under consideration is 
+
+    \begin{align*}
+        C_0 \dot{T_0} &= F - \alpha(T_0 - T_1) - \beta T_0 \\
+        C_1 \dot{T_1} &= \alpha(T_0 - T_1)
+    \end{align*}
+
+    which can be written
+
+    \begin{align*}
+        \dot{T_0} &= \frac{1}{C_0} \big( -(\alpha + \beta) T_0 + \alpha T_1 + F \big) \\
+        \dot{T_1} &= \frac{1}{C_1} \big( \alpha T_0 - \alpha T_1 \big) \\
+    \end{align*}
+
+    or in matrix form $\dot{T} = A T + B F$
+
+    $$ \begin{bmatrix} \dot{T_0} \\ \dot{T_1} \end{bmatrix} = \begin{bmatrix} -\frac{\alpha + \beta}{C_0} & \frac{\alpha}{C_0} \\ \frac{\alpha}{C_1} & - \frac{\alpha}{C_1} \end{bmatrix} \begin{bmatrix} T_0 \\ T_1\end{bmatrix} + \begin{bmatrix} \frac{1}{C_0} \\ 0 \end{bmatrix} F $$
+
+    \begin{enumerate}
+        \item % 2.a
+        To determine if the system is stable, check the eigenvalues of $A$, which are solutions to the characteristic equation
+
+        \begin{align*}
+            \mathtt{det} (A - \lambda I) &= \mathtt{det}\begin{bmatrix} -\frac{\alpha + \beta}{C_0} - \lambda & \frac{\alpha}{C_0} \\ \frac{\alpha}{C_1} & - \frac{\alpha}{C_1} - \lambda \end{bmatrix} = 0 \\
+            &= \mathtt{det}\begin{bmatrix} -\frac{\alpha + \beta + C_0 \lambda}{C_0} & \frac{\alpha}{C_0} \\ \frac{\alpha}{C_1} & - \frac{\alpha + C_1\lambda}{C_1} \end{bmatrix} \\
+            &= \left( -\frac{\alpha + \beta + C_0 \lambda}{C_0} \right) \left( - \frac{\alpha + C_1\lambda}{C_1} \right) - \left( \frac{\alpha}{C_0} \right)  \left( \frac{\alpha}{C_1}  \right) = 0\\
+            &= \alpha C_1 \lambda + \alpha\beta + \beta C_1 \lambda + \alpha C_0 \lambda + C_0 C_1 \lambda^2 = 0 \\
+            &= \lambda^2 + \big( \alpha C_1 + \beta C_1 + \alpha C_0 \big) \lambda + \alpha\beta = 0
+        \end{align*}
+
+        From the quadratic equation, the eigenvalues are
+
+        $$ \lambda = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} $$
+
+        For them to be negative requires
+
+        $$ b > \sqrt{b^2 - 4ac} \quad \implies \quad 4ac > 0 $$
+
+        because we are given that all of the parameters are positive, this condition holds, which means that the eigenvalues are negative and therefore the system is stable.
+
+        To determine the steady state temperatures, set $\dot{T} = 0$:
+
+        \begin{align*}
+            \dot{T_1} &= 0 = \frac{1}{C_1} \big( \alpha T_0 - \alpha T_1 \big) \quad \implies \quad T_0 = T_1 \\
+            \dot{T_0} &= 0 = \frac{1}{C_0} \big( -(\alpha + \beta) T_0 + \alpha T_1 + F \big) = \frac{-\beta}{C_0}T_0 + \frac{F}{C_0} \\
+            T_0 &= T_1 = \frac{F}{\beta}
+        \end{align*}
+
+        \item % 2.b
+        Let $C_0 = C_1 = C$.
+
+        A system is reachable if its reachability matrix is full rank.  For the 2x2 case, the reachability matrix is
+
+        $$ W_r = \begin{bmatrix} B & AB \end{bmatrix} $$
+
+        which for this system is
+
+        $$ \begin{bmatrix} \frac{1}{C} & - \frac{\alpha + \beta}{C^2} \\ 0 & \frac{\alpha}{C^2}  \end{bmatrix} $$
+
+        which has a rank of 2, so the system is reachable.
+
+        Design a state feedback system where $F = -Kx$ and $K = \begin{bmatrix} k_1 & k_2 \end{bmatrix}$.  This means
+
+        $$ \dot{x} = Ax + Bu = Ax - BKx = (A - BK)x $$
+
+        We want to set both eigenvalues of $(A - BK)$ to $- \frac{\beta}{C}$, which requires writing $K$ in terms of $\lambda$.  
+
+        \begin{align*}
+            0 &= \mathtt{det} (A - BK - \lambda I) \\
+            &= \mathtt{det}
+            \begin{bmatrix}
+                -\frac{\alpha + \beta + k_1 + C_0 \lambda}{C_0} & \frac{\alpha - k_2}{C_0} \\
+                \frac{\alpha}{C_1} & - \frac{\alpha + C_1 \lambda}{C_1}
+            \end{bmatrix} \\
+            &= \lambda^2 + \frac{k_1 + \beta + 2 \alpha}{C} \lambda + \frac{\alpha}{C^2} (\beta + k_1 + k_2)
+        \end{align*}
+
+        The eigenvalues should be a solution to
+
+        $$ (\lambda - \lambda_1)(\lambda - \lambda_2) = 0 = \lambda^2 - (\lambda_1 + \lambda_2) \lambda + \lambda_1 \lambda_2 $$
+
+        Therefore
+
+        \begin{align*}
+            \lambda_1 + \lambda_2 &= -\frac{k_1 + \beta + 2\alpha}{c} \\
+            \lambda_1 \lambda_2 &= \frac{\alpha}{C^2} (\beta + k_1 + k_2)
+        \end{align*}
+
+        solving for $k$ gives
+
+        \begin{align*}
+            k_1 &= -C(\lambda_1 + \lambda_2) - \beta - 2\alpha \\
+            k_2 &= \frac{C^2 \lambda_1 \lambda_2 - \alpha\beta - \alpha k_1}{\alpha} \\
+             &= \frac{C^2}{\alpha} \lambda_1 \lambda_2 - \beta - \big( -C(\lambda_1 + \lambda_2) - \beta - 2\alpha  \big) \\
+             &= \frac{C^2}{\alpha} \lambda_1 \lambda_2 + C(\lambda_1 + \lambda_2) + 2\alpha
+        \end{align*}
+
+        Plugging in $\lambda_1 = \lambda_2 = -\frac{\beta}{C}$ gives
+
+        \begin{align*}
+            k_1 &= -C(\lambda_1 + \lambda_2) - \beta - 2\alpha \\
+             &= -C(-\frac{2\beta}{C}) - \beta - 2\alpha = \beta - 2\alpha \\
+            k_2 &= \frac{C^2}{\alpha} \lambda_1 \lambda_2 + C(\lambda_1 + \lambda_2) + 2\alpha \\
+             &= \frac{C^2}{\alpha} \frac{\beta^2}{C^2} + C(-\frac{2\beta}{C}) + 2\alpha = \frac{\beta^2}{\alpha} - 2\beta + 2\alpha
+        \end{align*}
+
+        so the controller is
+
+        $$K = \begin{bmatrix} k_1 & k_2 \end{bmatrix} = \begin{bmatrix} \beta - 2\alpha & \frac{\beta^2}{\alpha} + 2(\alpha - \beta) \end{bmatrix} $$
+
+        \item % 2.c
+        The output of the system is $y = T_0$, which can be written $y = Cx + Du$ where $C = \begin{bmatrix} 1 & 0 \end{bmatrix}$ and $D = 0$.  A system is observable if its observability matrix $W_o$ is full rank.  In this 2x2 case the observability matrix is 
+
+        $$ W_0 = \begin{bmatrix} C \\ CA \end{bmatrix} = \begin{bmatrix} 1 & 0 \\ -\frac{\alpha + \beta}{C} & \frac{\alpha}{C} \end{bmatrix}$$
+
+        This is full rank, so the system is observable from this output.  A state estimator $L$ allows the state simulator to take into account the measurement of the system:
+
+        \begin{align*}
+            \dot{\tilde{x}} &= A \tilde{x} + B u + L (y - \tilde{y}) \\
+            \tilde{y} &= C \tilde{x} \\
+            so \\
+            \dot{e} &=  A \tilde{x} + B u + L (y - \tilde{y}) - Ax - Bu\\ 
+            &= (A - LC)e
+        \end{align*}
+
+        We want to place both of the eigenvalues of $(A - LC)$ at $-\frac{\alpha}{C}$.  First write $L = \begin{bmatrix} l_1 \\ l_2 \end{bmatrix}$ in terms of the eigenvalues, then plug the desired value.
+
+        \begin{align*}
+            0 &= \mathtt{det}(A - LC - \lambda I) \\
+            &= \mathtt{det}
+            \begin{bmatrix}
+                -\frac{\alpha + \beta + Cl_1 + C \lambda}{C} & \frac{\alpha}{C} \\
+                \frac{\alpha - Cl_2}{C} & - \frac{\alpha + C\lambda}{C}
+            \end{bmatrix} \\
+            &= \frac{1}{C^2} \big( \alpha^2 + \alpha\beta + \alpha C l_1 + \alpha C \lambda + \alpha C \lambda + \beta C \lambda + l_1 C^2 \lambda + C^2 \lambda^2 \big) - \frac{\alpha^2 - \alpha C l_2}{C^2} \\
+            &= \lambda^2 + \frac{1}{C^2}\big( 2 \alpha C \lambda + \beta C \lambda + l_1 C^2 \big) \lambda  + \frac{1}{C^2}\big(\alpha\beta + \alpha C l_1 + \alpha C l_2) \\
+            &= \lambda^2 + \left( \frac{2\alpha + \beta}{C} + l_1 \right) \lambda + \left( \frac{\alpha\beta}{C^2} + \frac{\alpha}{C}(l_1 + l_2) \right)
+        \end{align*}
+
+        As in part b), the eigenvalues are solutions of
+
+        $$ (\lambda - \lambda_1)(\lambda - \lambda_2) = 0 = \lambda^2 - (\lambda_1 + \lambda_2) \lambda + \lambda_1 \lambda_2 $$
+
+        so 
+
+        \begin{align*}
+            -(\lambda_1 + \lambda_2) &= \frac{2\alpha + \beta}{C} + l_1 \quad \implies \quad l_1 = -\frac{2\alpha + \beta}{C} - (\lambda_1 + \lambda_2) \\
+            \lambda_1 \lambda_2 &= \frac{\alpha\beta}{C^2} + \frac{\alpha}{C}(l_1 + l_2) \\
+            l_2 &= \frac{C}{\alpha} \left(  \lambda_1 \lambda_2 - \frac{\alpha \beta}{C^2} - \frac{\alpha}{C} l_1 \right) = \frac{C \lambda_1 \lambda_2}{\alpha} - \frac{\beta}{C} - l_1 \\
+            &= \frac{C \lambda_1 \lambda_2}{\alpha} - \frac{\beta}{C} + \frac{2\alpha + \beta}{C} + (\lambda_1 + \lambda_2)
+        \end{align*}
+
+        plugging in $\lambda_1 = \lambda_2 = - \frac{\alpha}{C}$ gives
+
+        \begin{align*}
+            l_1 &= -\frac{2\alpha + \beta}{C} + \frac{2\alpha}{C} = -\frac{\beta}{C} \\
+            l_2 &= \frac{C \alpha^2}{\alpha C^2} - \frac{\beta}{C} + \frac{2\alpha + \beta}{C} - \frac{2\alpha}{C} = \frac{\alpha}{C}
+        \end{align*}
+
+        so the observer matrix $L$ is 
+
+        $$ L = \begin{bmatrix} l_1 \\ l_2 \end{bmatrix} = \begin{bmatrix} -\frac{\beta}{C} \\  \frac{\alpha}{C} \end{bmatrix} $$
+
+    \end{enumerate}
+
+
+    \item % Problem 3
+    \begin{enumerate}
+        \item % 3.a
+        The form of the transfer functions can be written give the corresponding Bode plots.
+
+        \begin{enumerate}
+
+            \item % B.1
+            Bode plot B.1 has a pole at zero frequency, which is indicated by the negative slope at the plot's minimum frequency and because the phase at the minimum plotted frequency starts at $-90^o$.  This corresponds to a $\frac{1}{s}$ term in the transfer function.  Above this frequency, there is one pole followed by one zero.  The pole at a lower frequency is indicated as the negative slope of the magnitude Bode plot increases around 0.1 rad/s, and the phase heads towards $-180^o$.  The zero at the higher frequency is indicated by the decrease in negative slope near 10 rad/s, and is also shown by the phase moving back towards $-90^o$.  This arrangement of poles and zeros is supported by the phase and magnitude diagrams, as the maximum plotted frequency has a $-90^o$ phase and a magnitude slope of -20 dB/decade.  These features correspond to the  $\frac{s + a}{s + b}$ terms.  Thus the transfer function has the form
+
+            $$ k \frac{s + a}{s(s + b)}, \quad 1 > k > 0, \quad a > b > 0 $$
+
+            The static gain constant $k$ should be positive but less than one, as the magnitude at $s = 1$ is less than unity:
+
+            $$ k \frac{1 + a}{1 + b} < 1 $$
+
+            and $a > b \implies \frac{1 + a}{1 + b} > 1$ so $k$ must be less than 1.
+
+            \item % B.2
+            Bode plot B.2 has some second order pole near frequency 2, which is indicated because of the magnitude plot's flatness below this frequency, with a peak at the frequency and a steep negative slope afterwards.  This is also indicated in the phase plot which shows a zero degree phase at low frequencies followed by a sudden decrease towards $-180^o$, where the phase begins to level out.  This features corresponds to the $\frac{1}{s^2 + 2 \zeta_0 \omega_0 s + \omega_0^2}$ term.  To get the peak means that $0 <\zeta_0 < 1$The phase plot also indicates an additional pole bringing the phase at high frequencies to $-270^o$.  The plot shows that the phase doesn't level out at $-180^o$ as one would expect if the system had only the second order pole, but rather continues to decrease up to around $10^2$ rad/s.  This must mean that this pole occurs at a higher frequency than the second order one.  Finally, because the magnitude plot is larger than unity at low frequencies, the $k$ static gain parameter is larger than 1.  Thus, the transfer function has the form
+
+            $$ \frac{k}{(s + a) (s^2 + 2\zeta_0\omega_0 s + \omega_0^2)}, \quad k > 1, \quad a > \omega_0 > 0, \quad 1 > \zeta_0 > 0$$
+
+            \item % B.3
+            Bode plot B.3 has two poles and a zero, all at non zero frequency, which explains why the phase plot starts at $0^o$, then decreases towards $-180^o$ before returning to $-90^o$.  The two poles occur at a lower frequency than the zero.  It seems like one of these poles does occur at a lower frequency than the other.  Thus, the transfer function has the form
+
+            $$ k \frac{s + a}{(s + b)(s + c)}, \quad a > b > c > 0, \quad k > \frac{bc}{a}$$
+
+            Because the magnitude plot has positive gain at low frequencies, this suggests that $k > \frac{b c}{a}$
+        \end{enumerate}
+
+        \item % 3.b
+        \begin{enumerate}
+            \item % B.1
+            The transfer function associated with Bode plot B.1 has a pole at zero, which means that the magnitude of the transfer function is large, suggesting that it corresponds to Nyquist plot N.2
+
+            \item % B.2
+            Determining that B.3 matches with N.1 first leaves that B.2 matches with N.3.  This is supported by the fact that N.3 shows a single encirclement of (-1, 0), suggesting that the system is unstable (the phase margin is negative)
+
+            \item % B.3
+            The phase diagram in Bode plot B.3 shows that the phase never reaches $-180^o$, which means that the gain margin is infinite.  This suggests that Nyquist Diagram does not cross the real axis (x-axis) below zero, meaning that the size of the plot could be increased infinitely without encircling (-1, 0).  This suggests that B.3 is associated with Nyquist Plot N.1.
+        \end{enumerate}
+
+        In summary,
+
+        B.1 = N.2 \\
+        B.2 = N.3 \\
+        B.3 = N.1 
+
+        \item % 3.c
+        Start by examining B.2 = N.3.  The transfer function has one pole in the RHP and the Nyquist plot shows one encirclement of (-1, 0), suggesting that the closed loop system is unstable.  This corresponds to step response S.1.  This is corroborated by the fact that neither B.1 nor B.3 have any poles in the RHP nor clockwise encirclements of (-1, 0).
+
+        To decide between the remaining two step responses, check the steady state error.  S.2 has noticeable steady state error.  B.1's pole at zero means that it has an integrator, which removes steady state error.  This implies that B.3 is associated with S.2, leaving B.1 to be associated with S.3 (which has no noticeable steady state error).
+
+        In summary,
+
+        B.1 = S.3 \\
+        B.2 = S.1 \\
+        B.3 = S.2
+
+    \end{enumerate}
+
+    \item % Problem 4
+    \item % Problem 5
+
+
+\end{enumerate}
+\end{document}
+
+
